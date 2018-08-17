@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import HelloWorld from './components/hello-world';
-import mp3 from './karloff-without-intro.mp3';
+import mp3 from './sounds/karloff-without-intro.mp3';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class App extends Component {
         <audio controls src={mp3}>
           <track kind="captions" />
         </audio>
-        <HelloWorld title="Hello from React webpack" />;
+        <HelloWorld title="Hello from React !!" />;
       </div>
     );
   }

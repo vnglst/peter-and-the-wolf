@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const commonPaths = require('./paths');
 
@@ -64,15 +63,6 @@ module.exports = {
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
       template: commonPaths.templatePath,
-    }),
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'peter-wolf',
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filename: 'service-worker.js',
-      maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
-      // minify: true,
-      // navigateFallback: PUBLIC_PATH + 'index.html',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
   ],
 };

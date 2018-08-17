@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const commonPaths = require('./paths');
 
 module.exports = {
@@ -35,6 +36,15 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `${commonPaths.cssFolder}/[name].css`,
       chunkFilename: '[id].css',
+    }),
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'peter-and-the-wolf',
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'service-worker.js',
+      maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
+      // minify: true,
+      // navigateFallback: PUBLIC_PATH + 'index.html',
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
   ],
   devtool: 'source-map',

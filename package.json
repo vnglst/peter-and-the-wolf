@@ -1,7 +1,7 @@
 {
-  "name": "@HashemKhalifa/webpack-react-boilerplate",
+  "name": "peter-wolf",
   "version": "1.0.0",
-  "description": "Boilerplate for react and webpack4 using, CSS-Modules, react hot loader, webpack-serve",
+  "description": "Peter and the Wolf PWA",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-serve --open",
@@ -33,9 +33,9 @@
       "jsx"
     ]
   },
-  "repository": "https://github.com/HashemKhalifa/webpack-react-boilerplate",
-  "author": "HashemKhalifa",
-  "license": "ISC",
+  "repository": "https://github.com/vnglst/peter-and-the-wolf",
+  "author": "Koen van Gilst",
+  "license": "MIT",
   "private": false,
   "engines": {
     "node": ">=8",

@@ -1,0 +1,32 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.title {
+  margin: 20px;
+  text-align: center;
+  text-shadow: 0 0 5px var(--blauw), 0 0 10px var(--blauw),
+    0 0 15px var(--blauw);
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.column > button {
+  margin: 20px;
+}
+
+.audio-container {
+  margin: 20px 0;
+}

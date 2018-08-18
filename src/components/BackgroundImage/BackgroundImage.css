@@ -1,0 +1,17 @@
+.background-image {
+  background: no-repeat center center fixed;
+  background-size: cover;
+  display: block;
+  height: 100%;
+  left: 0;
+  right: 0;
+  position: fixed;
+}
+
+.background-image-children {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}

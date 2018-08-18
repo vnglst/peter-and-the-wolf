@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Gravitas+One');
+
+:root {
+  --blauw: #245c8f;
+  --zwart: black;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: 'Gravitas One', verdana, sans-serif;
+  font-size: 18px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  -webkit-user-select: none; /* disable text selection for all elements */
+}
+
+body {
+  margin: 0;
+  color: var(--zwart);
+  background: var(--blauw);
+}

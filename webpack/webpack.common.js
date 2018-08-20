@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const commonPaths = require('./paths');
 
@@ -61,6 +62,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProgressPlugin(),
+    new CopyWebpackPlugin([{ from: 'static' }]),
     new HtmlWebpackPlugin({
       template: commonPaths.templatePath,
     }),

@@ -1,0 +1,7 @@
+{
+  "name": "Peter and the Wolf",
+  "short_name": "Peter & Wolf",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#245c8f"
+}

@@ -7,6 +7,8 @@ import backgroundJpg from './images/kym-645714-unsplash.jpg';
 import styles from './app.css';
 import './Global.css';
 
+/* eslint jsx-a11y/accessible-emoji: 0 */
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -16,15 +18,15 @@ class App extends Component {
   render() {
     return (
       <BackgroundImage imageSrc={backgroundJpg}>
-        <div className={styles['app']}>
-          <h1 className={styles['title']}>Peter and the Wolf</h1>
-          <div className={styles['row']}>
-            <div className={styles['column']}>
+        <div className={styles.app}>
+          <h1 className={styles.title}>Peter and the Wolf</h1>
+          <div className={styles.row}>
+            <div className={styles.column}>
               <Button>🐺</Button>
               <Button>🐦</Button>
               <Button>🦆</Button>
             </div>
-            <div className={styles['column']}>
+            <div className={styles.column}>
               <Button>👴</Button>
               <Button>👦</Button>
               <Button>😼</Button>

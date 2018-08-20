@@ -20,17 +20,13 @@ class App extends Component {
       <BackgroundImage imageSrc={backgroundJpg}>
         <div className={styles.app}>
           <h1 className={styles.title}>Peter and the Wolf</h1>
-          <div className={styles.row}>
-            <div className={styles.column}>
-              <Button>🐺</Button>
-              <Button>🐦</Button>
-              <Button>🦆</Button>
-            </div>
-            <div className={styles.column}>
-              <Button>👴</Button>
-              <Button>👦</Button>
-              <Button>😼</Button>
-            </div>
+          <div className={styles.grid}>
+            <Button>🐺</Button>
+            <Button>🐦</Button>
+            <Button>🦆</Button>
+            <Button>👴</Button>
+            <Button>👦</Button>
+            <Button>😼</Button>
           </div>
           <div className={styles['audio-container']}>
             <audio controls src={mp3}>

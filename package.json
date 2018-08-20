@@ -9,7 +9,7 @@
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest --watchAll --coverage",
     "precommit": "lint-staged",
-    "deploy": "netlify deploy"
+    "deploy": "yarn build; netlify deploy"
   },
   "lint-staged": {
     "*.{js,jsx,css,md}": [

@@ -7,7 +7,9 @@ import backgroundJpg from './images/kym-645714-unsplash.jpg';
 import styles from './app.css';
 import './Global.css';
 
+// TODO: Fix a11y
 /* eslint jsx-a11y/accessible-emoji: 0 */
+/* eslint jsx-a11y/media-has-caption: 0 */
 
 class App extends Component {
   constructor(props) {
@@ -29,9 +31,7 @@ class App extends Component {
             <Button>😼</Button>
           </div>
           <div className={styles['audio-container']}>
-            <audio controls src={mp3}>
-              <track kind="captions" />
-            </audio>
+            <audio controls src={mp3} />
           </div>
         </div>
       </BackgroundImage>

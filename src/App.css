@@ -15,13 +15,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-gap: 20px;
+  grid-template-columns: 15vh 15vh 15vh;
+  grid-gap: 3vh;
 }
 
 @media (min-width: 400px) {
   .grid {
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 15vh 15vh 15vh 15vh;
+    grid-gap: 6vh;
   }
 }
 

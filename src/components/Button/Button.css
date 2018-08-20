@@ -1,6 +1,7 @@
 .my-button {
-  font-weight: 900;
-  font-size: 8vh;
+  font-size: 7vh;
+  width: 15vh;
+  height: 15vh;
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
   background: inherit;
   border-radius: 10px;

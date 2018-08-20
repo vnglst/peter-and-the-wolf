@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import mp3 from './sounds/karloff-without-intro.mp3';
+import SoundFX from './utils/web-sound-fx';
 import BackgroundImage from './components/BackgroundImage';
 import Button from './components/Button';
 import backgroundJpg from './images/kym-645714-unsplash.jpg';
@@ -15,6 +15,21 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.currentSoundId = '';
+    this.sfx = new SoundFX();
+    this.sfx.load('./sounds/wolf.mp3', 'wolf');
+    this.sfx.load('./sounds/bird.mp3', 'bird');
+    this.sfx.load('./sounds/duck.mp3', 'duck');
+    this.sfx.load('./sounds/grandfather.mp3', 'grandfather');
+    this.sfx.load('./sounds/peter.mp3', 'peter');
+    this.sfx.load('./sounds/cat.mp3', 'cat');
+    this.sfx.load('./sounds/rifleshots.mp3', 'rifleshots');
+  }
+
+  playSound(soundId) {
+    this.sfx.stop(this.currentSoundId);
+    this.sfx.play(soundId);
+    this.currentSoundId = soundId;
   }
 
   render() {
@@ -23,15 +38,20 @@ class App extends Component {
         <div className={styles.app}>
           <h1 className={styles.title}>Peter and the Wolf</h1>
           <div className={styles.grid}>
-            <Button>🐺</Button>
-            <Button>🐦</Button>
-            <Button>🦆</Button>
-            <Button>👴</Button>
-            <Button>👦</Button>
-            <Button>😼</Button>
+            <Button onClick={() => this.playSound('peter')}>👦</Button>
+            <Button onClick={() => this.playSound('wolf')}>🐺</Button>
+            <Button onClick={() => this.playSound('bird')}>🐦</Button>
+            <Button onClick={() => this.playSound('duck')}>🦆</Button>
+            <Button onClick={() => this.playSound('grandfather')}>👴</Button>
+            <Button onClick={() => this.playSound('cat')}>😼</Button>
+            <Button onClick={() => this.playSound('rifleshots')}>🔫</Button>
           </div>
           <div className={styles['audio-container']}>
-            <audio controls src={mp3} />
+            <audio
+              id="main-audio"
+              controls
+              src="./sounds/karloff-without-intro.mp3"
+            />
           </div>
         </div>
       </BackgroundImage>

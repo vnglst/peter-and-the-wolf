@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-serve --open",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack; yarn sw-precache",
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest --watchAll --coverage",
     "precommit": "lint-staged",
-    "deploy": "yarn build; netlify deploy"
+    "deploy": "yarn build; netlify deploy",
+    "sw-precache": "rm build/service-worker.js; sw-precache --config=sw-precache-config.js --verbose; mv service-worker.js build/"
   },
   "lint-staged": {
     "*.{js,jsx,css,md}": [
@@ -106,7 +107,7 @@
     "pretty-quick": "1.6.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.22.1",
-    "sw-precache-webpack-plugin": "^0.11.5",
+    "sw-precache": "^5.2.1",
     "webpack": "4.16.5",
     "webpack-cli": "3.1.0",
     "webpack-merge": "4.1.4",

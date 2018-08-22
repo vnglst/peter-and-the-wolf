@@ -10,7 +10,7 @@
     "test": "jest --watchAll --coverage",
     "precommit": "lint-staged",
     "deploy": "yarn build; netlify deploy",
-    "sw-precache": "rm build/service-worker.js; sw-precache --config=sw-precache-config.js --verbose; mv service-worker.js build/sw.js"
+    "sw-precache": "rm build/service-worker.js; sw-precache --config=sw-precache-config.js --verbose; mv service-worker.js build/sw.js; cp service-worker-import.js build/"
   },
   "lint-staged": {
     "*.{js,jsx,css,md}": [

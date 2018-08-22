@@ -1,4 +1,5 @@
 module.exports = {
+  cacheId: 'peter-and-the-wolf',
   staticFileGlobs: [
     'build/css/**.*',
     'build/**.html',
@@ -19,4 +20,5 @@ module.exports = {
       handler: 'cacheFirst',
     },
   ],
+  importScripts: ['./service-worker-import.js'],
 };

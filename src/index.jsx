@@ -8,8 +8,14 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   console.log('Service Worker App loading started');
   navigator.serviceWorker
     .register('/sw.js')
-    .then(() => {
-      console.log('Service Worker App Registered');
+    .then(reg => {
+      console.log('ServiceWorker registration successful with reg: ', reg);
+      navigator.serviceWorker.addEventListener('message', event => {
+        console.log('message from SW : ', event.data.percentage);
+        console.log('message from SW : ', event.data.done);
+        // TODO: update DOM to show the percentage. Replace this with
+        // DOM manipulation per your liking.
+      });
     })
     .catch(() => {
       console.error('Error registering Service Worker');

@@ -17,13 +17,13 @@ class App extends Component {
     this.state = {};
     this.currentSoundId = '';
     this.sfx = new SoundFX();
-    this.sfx.load('./sounds/wolf.mp3', 'wolf');
-    this.sfx.load('./sounds/bird.mp3', 'bird');
-    this.sfx.load('./sounds/duck.mp3', 'duck');
-    this.sfx.load('./sounds/grandfather.mp3', 'grandfather');
-    this.sfx.load('./sounds/peter.mp3', 'peter');
-    this.sfx.load('./sounds/cat.mp3', 'cat');
-    this.sfx.load('./sounds/rifleshots.mp3', 'rifleshots');
+    this.sfx.load('./sound-fxs/wolf.mp3', 'wolf');
+    this.sfx.load('./sound-fxs/bird.mp3', 'bird');
+    this.sfx.load('./sound-fxs/duck.mp3', 'duck');
+    this.sfx.load('./sound-fxs/grandfather.mp3', 'grandfather');
+    this.sfx.load('./sound-fxs/peter.mp3', 'peter');
+    this.sfx.load('./sound-fxs/cat.mp3', 'cat');
+    this.sfx.load('./sound-fxs/rifleshots.mp3', 'rifleshots');
   }
 
   playSound(soundId) {

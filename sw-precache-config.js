@@ -14,5 +14,9 @@ module.exports = {
       urlPattern: /https?:\/\/fonts.+/,
       handler: 'cacheFirst',
     },
+    {
+      urlPattern: /\/sound-fxs\//,
+      handler: 'cacheFirst',
+    },
   ],
 };

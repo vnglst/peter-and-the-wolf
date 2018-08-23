@@ -43,7 +43,7 @@
     "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
     "react/jsx-boolean-value": ["warn", "never"],
     "react/jsx-curly-spacing": ["warn", "never"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".jsx"] }],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js"] }],
     "react/jsx-first-prop-new-line": ["warn", "multiline"],
     "react/jsx-handler-names": [
       "warn",

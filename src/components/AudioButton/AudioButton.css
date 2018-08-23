@@ -1,8 +1,17 @@
 .audio-button {
-  font-size: 7vh;
-  width: 15vh;
-  height: 15vh;
+  margin: 3vmin;
+  font-size: 6vmax;
+  width: 12vmax;
+  height: 12vmax;
   position: relative;
+}
+
+@media (min-width: 1000px) {
+  .audio-button {
+    width: 150px;
+    height: 150px;
+    font-size: 70px;
+  }
 }
 
 .button-content {

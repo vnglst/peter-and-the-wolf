@@ -1,0 +1,23 @@
+.audio-button {
+  font-size: 7vh;
+  width: 15vh;
+  height: 15vh;
+  position: relative;
+}
+
+.button-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.play-pause-icon-overlay {
+  color: white;
+  opacity: 0;
+}
+
+.audio-button:hover .play-pause-icon-overlay,
+.is-currently-playing {
+  opacity: 0.6;
+}

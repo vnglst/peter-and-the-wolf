@@ -31,11 +31,12 @@ SoundFX.prototype.load = function load(url, name) {
     .catch(error => console.error('BufferLoader: XHR error', error));
 };
 
-SoundFX.prototype.play = function play(name) {
+SoundFX.prototype.play = function play(name, onEnded) {
   const source = this.context.createBufferSource();
   source.buffer = this.buffers[name];
   source.connect(this.context.destination);
   source.start();
+  source.addEventListener('ended', onEnded);
   this.sources[name] = source;
 };
 

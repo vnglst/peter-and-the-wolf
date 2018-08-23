@@ -1,0 +1,47 @@
+.bottom-bar-button {
+  height: 70px;
+  background: none;
+  color: black;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  flex: 1 1 auto;
+  min-width: 60px;
+  max-width: 144px;
+  font-size: 24px;
+}
+
+.bottom-bar-button:hover {
+  animation: zoom 100ms ease-in-out 1 forwards;
+}
+
+.bottom-bar-button:active {
+  animation: press 100ms ease-in-out 1 forwards;
+}
+
+.bottom-bar-button:disabled {
+  color: #002747;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes press {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}

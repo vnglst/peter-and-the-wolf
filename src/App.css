@@ -19,6 +19,10 @@
   grid-gap: 3vh;
 }
 
+.bottom-bar-placeholder {
+  height: 100px;
+}
+
 @media (min-width: 400px) {
   .grid {
     grid-template-columns: 15vh 15vh 15vh 15vh;

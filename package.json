@@ -1,11 +1,13 @@
 {
-  "name": "peter-wolf",
+  "name": "peter-and-the-wolf",
   "version": "1.0.0",
   "description": "Peter and the Wolf PWA",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-serve --open",
     "build": "cross-env NODE_ENV=production webpack; yarn sw-precache",
+    "build:stats": "cross-env NODE_ENV=production webpack --json > stats.json",
+    "build:analyze": "yarn build:stats; webpack-bundle-analyzer ./stats.json",
     "lint": "eslint src",
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest --watchAll --coverage",
@@ -49,6 +51,9 @@
     "npm": ">=3"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "^0.1.0-11",
     "classnames": "^2.2.6",
     "lodash": "4.17.10",
     "prop-types": "^15.6.2",
@@ -76,9 +81,8 @@
     "@babel/preset-react": "7.0.0-rc.1",
     "@babel/register": "7.0.0-rc.1",
     "@babel/runtime": "7.0.0-rc.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
-    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
-    "@fortawesome/react-fontawesome": "^0.1.0-11",
+    "@material-ui/core": "^1.5.1",
+    "@material-ui/icons": "^1.1.1",
     "babel-core": "7.0.0-beta.3",
     "babel-eslint": "8.2.6",
     "babel-jest": "23.4.2",
@@ -116,6 +120,7 @@
     "style-loader": "0.22.1",
     "sw-precache": "^5.2.1",
     "webpack": "4.16.5",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "3.1.0",
     "webpack-merge": "4.1.4",
     "webpack-serve": "2.0.2"

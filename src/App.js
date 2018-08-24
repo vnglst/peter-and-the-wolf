@@ -3,13 +3,10 @@
 /* eslint jsx-a11y/media-has-caption: 0 */
 /* eslint no-console: 0 */
 
-import {
-  faStepBackward,
-  faStepForward,
-  faPause,
-  faPlay,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PlayIcon from '@material-ui/icons/PlayArrow';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
+import PauzeIcon from '@material-ui/icons/Pause';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import SoundFX from 'utils/web-sound-fx';
@@ -106,21 +103,21 @@ class App extends Component {
               aria-label="30 seconds back"
               value="skip-back"
               onChange={() => this.skip(-30)}
-              icon={<FontAwesomeIcon icon={faStepBackward} />}
+              icon={<SkipPrevIcon />}
             />
             <BottomBar.Item
               disabled={!audioReady}
               aria-label={playing ? 'Pauze' : 'Play'}
               value={playing ? 'pauze' : 'play'}
               onChange={() => this.handlePlaybackToggle()}
-              icon={<FontAwesomeIcon icon={playing ? faPause : faPlay} />}
+              icon={playing ? <PauzeIcon /> : <PlayIcon />}
             />
             <BottomBar.Item
               disabled={!audioReady}
               aria-label="30 seconds forward"
               value="skip-forward"
               onChange={() => this.skip(30)}
-              icon={<FontAwesomeIcon icon={faStepForward} />}
+              icon={<SkipNextIcon />}
             />
           </BottomBar>
           <div className={styles['bottom-bar-placeholder']} />

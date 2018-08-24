@@ -4,6 +4,10 @@
   cursor: pointer;
 }
 
+.default-button svg {
+  font-size: 48px;
+}
+
 .default-button:hover {
   animation: zoom 100ms ease-in-out 1 forwards;
 }

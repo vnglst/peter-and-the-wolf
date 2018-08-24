@@ -1,5 +1,5 @@
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PlayIcon from '@material-ui/icons/PlayArrow';
+import PauzeIcon from '@material-ui/icons/Pause';
 import * as React from 'react';
 import Button from 'components/Button';
 import styles from './AudioButton.css';
@@ -18,7 +18,7 @@ const AudioButton = ({ children, className, isCurrentlyPlaying, ...other }) => {
           (isCurrentlyPlaying ? ' ' + styles['is-currently-playing'] : '')
         }
       >
-        <FontAwesomeIcon icon={isCurrentlyPlaying ? faPause : faPlay} />
+        {isCurrentlyPlaying ? <PauzeIcon /> : <PlayIcon />}
       </span>
     </Button>
   );

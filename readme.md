@@ -21,3 +21,4 @@ TODOs:
 - update this readme
 - fix a11y issues
 - optimize for lighthouse score
+- use SVG instead of Material-UI icons to decrease bundle size by at least 110Kb

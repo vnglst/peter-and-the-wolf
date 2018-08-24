@@ -5,7 +5,6 @@ module.exports = {
     'build/**.html',
     'build/**.json',
     'build/images/**.*',
-    'build/sounds/**.mp3',
     'build/js/**.*',
   ],
   stripPrefix: 'build/',
@@ -16,9 +15,8 @@ module.exports = {
       handler: 'cacheFirst',
     },
     {
-      urlPattern: /\/sound-fxs\//,
+      urlPattern: /\/sounds\//,
       handler: 'cacheFirst',
     },
   ],
-  importScripts: ['./service-worker-import.js'],
 };

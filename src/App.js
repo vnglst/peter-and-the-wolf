@@ -4,8 +4,8 @@
 /* eslint no-console: 0 */
 
 import {
-  faBackward,
-  faForward,
+  faStepBackward,
+  faStepForward,
   faPause,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +21,7 @@ import styles from './app.css';
 import './Global.css';
 
 const SOUND_TRACK_URL = './sounds/karloff-without-intro.mp3';
-const SOUND_FXS_PATH = './sound-fxs/';
+const SOUND_FXS_PATH = './sounds/';
 
 const SOUND_EFFECTS = [
   { id: 'peter', label: '👦', mp3: 'peter.mp3' },
@@ -106,7 +106,7 @@ class App extends Component {
               aria-label="30 seconds back"
               value="skip-back"
               onChange={() => this.skip(-30)}
-              icon={<FontAwesomeIcon icon={faBackward} />}
+              icon={<FontAwesomeIcon icon={faStepBackward} />}
             />
             <BottomBar.Item
               disabled={!audioReady}
@@ -120,7 +120,7 @@ class App extends Component {
               aria-label="30 seconds forward"
               value="skip-forward"
               onChange={() => this.skip(30)}
-              icon={<FontAwesomeIcon icon={faForward} />}
+              icon={<FontAwesomeIcon icon={faStepForward} />}
             />
           </BottomBar>
           <div className={styles['bottom-bar-placeholder']} />

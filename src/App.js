@@ -60,7 +60,10 @@ class App extends Component {
   }
 
   skip(value) {
+    // pause + start playback to allow setting currentTime in Safari
+    this.audio.pause();
     this.audio.currentTime = this.audio.currentTime + value;
+    this.audio.play();
   }
 
   playSound(soundId) {

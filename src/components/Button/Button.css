@@ -1,24 +1,18 @@
-.my-button {
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
-  background: inherit;
-  border-radius: 10px;
-  border: 0;
-  color: #011627;
-  box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
-  text-decoration: none;
-  padding: 15px;
+.default-button {
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
 }
 
-.my-button:hover {
+.default-button:hover {
   animation: zoom 100ms ease-in-out 1 forwards;
 }
 
-.my-button:active {
+.default-button:active {
   animation: press 100ms ease-in-out 1 forwards;
 }
 
-.my-button:disabled {
+.default-button:disabled {
   color: #002747;
   opacity: 0.5;
   cursor: not-allowed;

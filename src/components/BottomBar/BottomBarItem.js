@@ -1,16 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import Button from '../Button';
 import styles from './BottomBarItem.css';
 
 const BottomBarItem = ({ value, onChange, icon, ...other }) => (
-  <button
-    type="button"
+  <Button
     className={styles['bottom-bar-button']}
     onClick={() => onChange(value)}
     {...other}
   >
     {icon}
-  </button>
+  </Button>
 );
 
 BottomBarItem.propTypes = {

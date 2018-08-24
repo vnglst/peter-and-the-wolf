@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../Button';
+import Button from 'components/Button';
 import styles from './BottomBarItem.css';
 
 const BottomBarItem = ({ value, onChange, icon, ...other }) => (

@@ -1,7 +1,7 @@
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import Button from '../Button';
+import Button from 'components/Button';
 import styles from './AudioButton.css';
 
 const AudioButton = ({ children, className, isCurrentlyPlaying, ...other }) => {

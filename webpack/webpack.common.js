@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -58,6 +59,7 @@ module.exports = {
     ],
   },
   resolve: {
+    modules: [path.resolve(__dirname, '../src'), 'node_modules'],
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [

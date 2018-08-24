@@ -7291,10 +7291,6 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-sound-fx@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/sound-fx/-/sound-fx-2.1.0.tgz#a190a5f5c1a1c57f9977572e5bee01d84983645a"
-
 source-list-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.0.tgz#aaa47403f7b245a92fbc97ea08f250d6087ed085"

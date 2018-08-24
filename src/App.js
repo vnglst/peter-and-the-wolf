@@ -12,11 +12,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import SoundFX from './utils/web-sound-fx';
-import BottomBar from './components/BottomBar';
-import BackgroundImage from './components/BackgroundImage';
-import AudioButton from './components/AudioButton';
-import backgroundJpg from './images/kym-645714-unsplash.jpg';
+import SoundFX from 'utils/web-sound-fx';
+import BottomBar from 'components/BottomBar';
+import BackgroundImage from 'components/BackgroundImage';
+import AudioButton from 'components/AudioButton';
+import backgroundJpg from 'images/kym-645714-unsplash.jpg';
 import styles from './app.css';
 import './Global.css';
 

@@ -7,6 +7,7 @@ const commonPaths = require('./paths');
 
 module.exports = {
   entry: commonPaths.entryPath,
+  stats: 'minimal',
   module: {
     rules: [
       {

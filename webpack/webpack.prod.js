@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const SizePlugin = require('size-plugin');
 const commonPaths = require('./paths');
 
 module.exports = {
@@ -36,6 +37,7 @@ module.exports = {
       filename: `${commonPaths.cssFolder}/[name].css`,
       chunkFilename: '[id].css',
     }),
+    new SizePlugin(),
   ],
   devtool: 'source-map',
 };

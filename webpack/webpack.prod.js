@@ -2,6 +2,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const SizePlugin = require('size-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const commonPaths = require('./paths');
 
@@ -23,6 +25,7 @@ module.exports = {
             options: {
               sourceMap: true,
               modules: true,
+              minimize: true,
               localIdentName: '[local]___[hash:base64:5]',
             },
           },
@@ -75,4 +78,14 @@ module.exports = {
     }),
   ],
   devtool: 'source-map',
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
 };

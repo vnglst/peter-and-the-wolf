@@ -10,6 +10,7 @@ import PauzeIcon from '@material-ui/icons/Pause';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import SoundFX from 'utils/web-sound-fx';
+import { Howl } from 'howler';
 import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
 import AudioButton from 'components/AudioButton';
@@ -33,65 +34,91 @@ const SOUND_EFFECTS = [
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { audioReady: true, playing: false, currentSoundId: '' };
-    this.audio = new Audio(SOUND_TRACK_URL);
-
-    this.renderSoundFxsButtons = this.renderSoundFxsButtons.bind(this);
-    this.loadSoundFxs = this.loadSoundFxs.bind(this);
-    this.playSound = this.playSound.bind(this);
+    this.state = { audioReady: true, playing: false, currentSoundFxId: '' };
     this.loadSoundFxs();
+    this.loadMainSound();
   }
 
-  loadSoundFxs() {
+  loadMainSound = () => {
+    this.sound = new Howl({
+      src: [SOUND_TRACK_URL],
+      html5: true,
+    });
+  };
+
+  loadSoundFxs = () => {
     this.sfx = new SoundFX();
     SOUND_EFFECTS.map(sound =>
       this.sfx.load(SOUND_FXS_PATH + sound.mp3, sound.id),
     );
-  }
+  };
 
-  handlePlaybackToggle() {
+  handleMainSoundPlayOrPause = () => {
+    this.stopAllSoundFx();
+    this.toggleMainSoundPlayback();
+  };
+
+  toggleMainSoundPlayback = () => {
     const { playing } = this.state;
     if (!playing) {
-      this.audio.play();
+      this.sound.play();
     } else {
-      this.audio.pause();
+      this.sound.pause();
     }
     this.setState({ playing: !playing });
-  }
+  };
 
-  skip(value) {
-    // pause + start playback to allow setting currentTime in Safari
-    this.audio.pause();
-    this.audio.currentTime = this.audio.currentTime + value;
-    this.audio.play();
-  }
+  stopAllSoundFx = () => {
+    this.sfx.stopAll();
+    this.setState({ currentSoundFxId: '' });
+  };
 
-  playSound(soundId) {
-    const { playing, audioReady, currentSoundId } = this.state;
+  skip = value => {
+    const currentTime = this.sound.seek();
+    this.sound.seek(currentTime + value);
+  };
+
+  handleSoundFxPlayOrPause = soundId => {
+    const { playing, audioReady, currentSoundFxId } = this.state;
     if (!audioReady) return;
     if (playing) {
-      this.handlePlaybackToggle();
+      this.handleMainSoundPlayOrPause();
     }
-    this.sfx.stop(currentSoundId);
-    if (soundId === currentSoundId) return;
-    this.sfx.play(soundId, () => {
-      this.setState({ currentSoundId: '' });
-    });
-    this.setState({ currentSoundId: soundId });
-  }
+    this.stopAllSoundFx();
+    const isCurrentlyPlaying = currentSoundFxId && soundId === currentSoundFxId;
+    if (isCurrentlyPlaying) {
+      return;
+    }
+    this.playSoundFx(soundId);
+  };
 
-  renderSoundFxsButtons() {
-    const { currentSoundId } = this.state;
+  playSoundFx = soundId => {
+    this.sfx.play({
+      soundId,
+      onEnded: () => this.updateStateAfterSoundEnd(soundId),
+    });
+    this.setState({ currentSoundFxId: soundId });
+  };
+
+  updateStateAfterSoundEnd = soundId => {
+    const { currentSoundFxId } = this.state;
+    if (currentSoundFxId === soundId) {
+      this.setState({ currentSoundFxId: '' });
+    }
+  };
+
+  renderSoundFxsButtons = () => {
+    const { currentSoundFxId } = this.state;
     return SOUND_EFFECTS.map(sound => (
       <AudioButton
-        isCurrentlyPlaying={sound.id === currentSoundId}
+        isCurrentlyPlaying={sound.id === currentSoundFxId}
         key={sound.id}
-        onClick={() => this.playSound(sound.id)}
+        onClick={() => this.handleSoundFxPlayOrPause(sound.id)}
       >
         {sound.label}
       </AudioButton>
     ));
-  }
+  };
 
   render() {
     const { playing, audioReady } = this.state;
@@ -112,7 +139,7 @@ class App extends Component {
               disabled={!audioReady}
               aria-label={playing ? 'Pauze' : 'Play'}
               value={playing ? 'pauze' : 'play'}
-              onChange={() => this.handlePlaybackToggle()}
+              onChange={this.handleMainSoundPlayOrPause}
               icon={playing ? <PauzeIcon /> : <PlayIcon />}
             />
             <BottomBar.Item

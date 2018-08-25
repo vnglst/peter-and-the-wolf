@@ -14,10 +14,11 @@ TODOs:
 
 - ~~add all the friggin icons to manifest~~
 - ~~add splash screens~~
-- show progress bar + ball
+- ~~optimize all images png/jpg~~
 - prevent doubletap zoom
 - add sanatize css
 - disable text selection elements
+- show progress bar + ball
 - save current playback progress to localstorage
 - also use howler.js for soundfx
 - refactor all sound logic in separate class (with tests!)
@@ -30,7 +31,7 @@ TODOs:
 - add better quality (and really free) English mp3
 - ~~stop soundfx playback when starting main playback~~
 - move sw-cache to webpack plugin (test)
-- write this readme about game + PWA
+- write this readme about PWA
 - fix a11y issues
 - optimize for lighthouse score
 - use SVG instead of Material-UI icons to decrease bundle size by at least 110Kb
@@ -38,5 +39,5 @@ TODOs:
 
 ## PWA
 
-- favicons & app icons: https://realfavicongenerator.net/
-- splash screens iPhone: https://appsco.pe/developer/splash-screens (android automatic)
+- Best website to generate favicons & app icons: https://realfavicongenerator.net/
+- Beste website to generate splash screens iOS: https://appsco.pe/developer/splash-screens (android automatic, watch out for big images)

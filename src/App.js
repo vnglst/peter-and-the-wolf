@@ -82,7 +82,7 @@ class App extends Component {
     const { playing, audioReady, currentSoundFxId } = this.state;
     if (!audioReady) return;
     if (playing) {
-      this.handleMainSoundPlayOrPause();
+      this.toggleMainSoundPlayback();
     }
     this.stopAllSoundFx();
     const isCurrentlyPlaying = currentSoundFxId && soundId === currentSoundFxId;

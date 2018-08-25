@@ -45,6 +45,7 @@ module.exports = {
     new SizePlugin(),
     new SWPrecacheWebpackPlugin({
       cacheId: 'peter-and-the-wolf',
+      // maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'sw.js',
       minify: true,

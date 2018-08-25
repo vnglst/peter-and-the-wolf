@@ -2,6 +2,11 @@ Based upon this starter kit: https://github.com/HashemKhalifa/webpack-react-boil
 
 Moon Photo by Kym on Unsplash
 
+Under the hood:
+
+- `howler.js` - I'm never gonna try to do Web Audio for Safari again
+- `material-ui-icon` - I really wish treeshaking would be better supported, all this manually extracting the svg you need is driving me crazy (same for howler above)
+
 TODOs:
 
 - sound button should be disabled (loading state) if not yet loaded

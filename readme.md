@@ -15,9 +15,9 @@ TODOs:
 - ~~add all the friggin icons to manifest~~
 - ~~add splash screens~~
 - ~~optimize all images png/jpg~~
-- prevent doubletap zoom
-- add sanatize css
-- disable text selection elements
+- ~~prevent doubletap zoom~~
+- ~~add sanatize css~~
+- ~~disable text selection elements~~
 - show progress bar + ball
 - save current playback progress to localstorage
 - also use howler.js for soundfx

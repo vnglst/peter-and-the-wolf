@@ -56,10 +56,12 @@
     "@fortawesome/react-fontawesome": "^0.1.0-11",
     "classnames": "^2.2.6",
     "lodash": "4.17.10",
+    "prevent-double-tap-zoom": "^2.0.4",
     "prop-types": "^15.6.2",
     "react": "16.4.2",
     "react-dom": "16.4.2",
-    "react-hot-loader": "4.3.4"
+    "react-hot-loader": "4.3.4",
+    "sanitize.css": "^7.0.0"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

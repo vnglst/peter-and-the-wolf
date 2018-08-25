@@ -15,7 +15,6 @@ import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
 import AudioButton from 'components/AudioButton';
 import styles from './app.css';
-import './Global.css';
 
 const SOUND_TRACK_URL = './sounds/karloff-without-intro.mp3';
 const SOUND_FXS_PATH = './sounds/';

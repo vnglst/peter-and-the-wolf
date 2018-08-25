@@ -19,19 +19,19 @@ TODOs:
 - ~~add sanatize css~~
 - ~~disable text selection elements~~
 - ~~move sw-cache to webpack plugin (test)~~
+- add Dutch mp3's
+- find timecodes of chapters (first Dutch)
+- skip to next chapter
 - show progress bar + ball
 - save current playback progress to localstorage
+- add better quality (and really free) English mp3
 - also use howler.js for soundfx
 - refactor all sound logic in separate class (with tests!)
 - refactor all sound React state logic to separate component
 - sound button should be disabled (loading state) if not yet loaded or errored
 - ~~refactor playback logic~~
-- add Dutch mp3's
-- find timecodes of chapters (first Dutch)
-- skip to next chapter
-- add better quality (and really free) English mp3
 - ~~stop soundfx playback when starting main playback~~
-- write this readme about PWA
+- write README.md about PWA
 - fix a11y issues
 - optimize for lighthouse score
 - use SVG instead of Material-UI icons to decrease bundle size by at least 110Kb

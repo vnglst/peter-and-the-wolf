@@ -12,8 +12,8 @@ Moon Photo by Kym on Unsplash
 
 TODOs:
 
-- add all the friggin icons to manifest
-- add splash screens
+- ~~add all the friggin icons to manifest~~
+- ~~add splash screens~~
 - show progress bar + ball
 - prevent doubletap zoom
 - add sanatize css
@@ -35,3 +35,8 @@ TODOs:
 - optimize for lighthouse score
 - use SVG instead of Material-UI icons to decrease bundle size by at least 110Kb
 - only import functions I need from howler.js (or wait for proper treeshaking support?)
+
+## PWA
+
+- favicons & app icons: https://realfavicongenerator.net/
+- splash screens iPhone: https://appsco.pe/developer/splash-screens (android automatic)

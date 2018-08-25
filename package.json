@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production webpack; yarn sw-precache",
     "build:stats": "cross-env NODE_ENV=production webpack --json > stats.json",
     "build:analyze": "npm run build:stats; webpack-bundle-analyzer ./stats.json",
-    "lint": "eslint src",
+    "lint": "eslint src/**/*.js",
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest --watchAll --coverage",
     "precommit": "lint-staged",
@@ -18,7 +18,7 @@
   "lint-staged": {
     "*.{js,jsx,css,md}": [
       "prettier --write --single-quote",
-      "eslint --fix",
+      "eslint ./src/**/*.js --fix",
       "git add"
     ]
   },
@@ -95,13 +95,14 @@
     "css-loader": "1.0.0",
     "enzyme": "3.4.3",
     "enzyme-adapter-react-16": "1.2.0",
-    "eslint": "5.3.0",
+    "eslint": "^5.3.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "3.0.1",
     "eslint-loader": "2.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.21.0",
     "eslint-plugin-jsx-a11y": "6.1.1",
+    "eslint-plugin-markdown": "^1.0.0-beta.6",
     "eslint-plugin-prettier": "2.6.2",
     "eslint-plugin-react": "7.11.1",
     "eslint-watch": "4.0.2",

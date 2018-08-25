@@ -47,7 +47,7 @@ SoundFX.prototype.stop = function stop(name) {
   const source = this.sources[name];
   // HACK: for Safari to check if audio is actually being played
   // TODO: I really should be using Howler.js for this
-  if (source.playbackState && source.playbackState < 3) {
+  if (!source.playbackState || source.playbackState < 3) {
     source.stop();
   }
 };

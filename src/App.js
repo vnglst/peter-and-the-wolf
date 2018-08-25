@@ -14,12 +14,12 @@ import { Howl } from 'howler';
 import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
 import AudioButton from 'components/AudioButton';
-import backgroundJpg from 'images/kym-645714-unsplash.jpg';
 import styles from './app.css';
 import './Global.css';
 
 const SOUND_TRACK_URL = './sounds/karloff-without-intro.mp3';
 const SOUND_FXS_PATH = './sounds/';
+const BACKGROUND_IMAGE = 'images/kym-645714-unsplash.jpg';
 
 const SOUND_EFFECTS = [
   { id: 'peter', label: '👦', mp3: 'peter.mp3' },
@@ -74,8 +74,10 @@ class App extends Component {
   };
 
   skip = value => {
+    const { playing } = this.state;
     const currentTime = this.sound.seek();
     this.sound.seek(currentTime + value);
+    if (!playing) this.handleMainSoundPlayOrPause();
   };
 
   handleSoundFxPlayOrPause = soundId => {
@@ -123,7 +125,7 @@ class App extends Component {
   render() {
     const { playing, audioReady } = this.state;
     return (
-      <BackgroundImage imageSrc={backgroundJpg}>
+      <BackgroundImage imageSrc={BACKGROUND_IMAGE}>
         <div className={styles.app}>
           <h1 className={styles.title}>Peter and the Wolf</h1>
           <div className={styles.grid}>{this.renderSoundFxsButtons()}</div>

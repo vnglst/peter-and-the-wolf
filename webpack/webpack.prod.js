@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const SizePlugin = require('size-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const commonPaths = require('./paths');
 
@@ -39,6 +40,39 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new SizePlugin(),
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'peter-and-the-wolf',
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'sw.js',
+      minify: true,
+      verbose: true,
+      navigateFallback: commonPaths.public + 'index.html',
+      staticFileGlobsIgnorePatterns: [
+        /\.DS_Store$/,
+        /\.map$/,
+        /asset-manifest\.json$/,
+      ],
+      runtimeCaching: [
+        {
+          urlPattern: /https?:\/\/fonts.+/,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              name: 'fonts-cache',
+            },
+          },
+        },
+        {
+          urlPattern: /\/sounds\//,
+          handler: 'cacheFirst',
+          options: {
+            cache: {
+              name: 'sounds-cache',
+            },
+          },
+        },
+      ],
+    }),
   ],
   devtool: 'source-map',
 };

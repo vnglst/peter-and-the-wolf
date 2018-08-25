@@ -5,15 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-serve --open",
-    "build": "cross-env NODE_ENV=production webpack; yarn sw-precache",
+    "build": "cross-env NODE_ENV=production webpack",
     "build:stats": "cross-env NODE_ENV=production webpack --json > stats.json",
     "build:analyze": "npm run build:stats; webpack-bundle-analyzer ./stats.json",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest --watchAll --coverage",
     "precommit": "lint-staged",
-    "deploy": "yarn build; netlify deploy",
-    "sw-precache": "rm build/service-worker.js; sw-precache --config=sw-precache-config.js --verbose; mv service-worker.js build/sw.js"
+    "deploy": "yarn build; netlify deploy"
   },
   "lint-staged": {
     "*.{js,jsx,css,md}": [
@@ -124,6 +123,7 @@
     "size-plugin": "^1.0.0",
     "style-loader": "0.22.1",
     "sw-precache": "^5.2.1",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "webpack": "4.16.5",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "3.1.0",

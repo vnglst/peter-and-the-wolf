@@ -18,6 +18,7 @@ TODOs:
 - ~~prevent doubletap zoom~~
 - ~~add sanatize css~~
 - ~~disable text selection elements~~
+- ~~move sw-cache to webpack plugin (test)~~
 - show progress bar + ball
 - save current playback progress to localstorage
 - also use howler.js for soundfx
@@ -30,7 +31,6 @@ TODOs:
 - skip to next chapter
 - add better quality (and really free) English mp3
 - ~~stop soundfx playback when starting main playback~~
-- move sw-cache to webpack plugin (test)
 - write this readme about PWA
 - fix a11y issues
 - optimize for lighthouse score

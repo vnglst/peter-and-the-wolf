@@ -2,6 +2,7 @@ const commonPaths = require('./paths');
 
 module.exports = {
   mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
   output: {
     filename: '[name].js',
     path: commonPaths.outputPath,

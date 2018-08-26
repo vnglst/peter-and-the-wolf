@@ -51,11 +51,7 @@ module.exports = {
       minify: true,
       verbose: true,
       navigateFallback: commonPaths.public + 'index.html',
-      staticFileGlobsIgnorePatterns: [
-        /\.DS_Store$/,
-        /\.map$/,
-        /asset-manifest\.json$/,
-      ],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
       runtimeCaching: [
         {
           urlPattern: /https?:\/\/fonts.+/,

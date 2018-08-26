@@ -65,7 +65,7 @@ module.exports = {
   },
   plugins: [
     new webpack.ProgressPlugin(),
-    new CopyWebpackPlugin([{ from: 'static' }]),
+    new CopyWebpackPlugin([{ from: 'static', ignore: ['*.DS_Store*'] }]),
     new HtmlWebpackPlugin({
       template: commonPaths.templatePath,
     }),

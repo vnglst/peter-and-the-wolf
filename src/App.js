@@ -17,9 +17,19 @@ import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
 import AudioButton from 'components/AudioButton';
 import styles from './app.css';
-import { appConfig, dutchContentVanDijk } from './config';
+import {
+  appConfig,
+  dutchContentVanDijk,
+  englishContentKarloff,
+} from './config';
 
-const content = dutchContentVanDijk;
+// FIXME: really quick and hacky
+let content = englishContentKarloff;
+const getBrowserLanguage = () => navigator.language;
+const language = getBrowserLanguage();
+if (language && language.startsWith('nl')) {
+  content = dutchContentVanDijk;
+}
 
 class App extends Component {
   constructor(props) {

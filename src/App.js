@@ -4,12 +4,14 @@
 /* eslint no-console: 0 */
 
 import PlayIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
 import PauzeIcon from '@material-ui/icons/Pause';
+import Forward from '@material-ui/icons/Forward30';
+import Replay from '@material-ui/icons/Replay30';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import SoundFX from 'utils/web-sound-fx';
+import Storage from 'utils/storage';
+import { isNumeric } from 'utils/misc';
 import { Howl } from 'howler';
 import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
@@ -19,6 +21,8 @@ import styles from './app.css';
 const SOUND_TRACK_URL = './sounds/karloff-without-intro.mp3';
 const SOUND_FXS_PATH = './sounds/';
 const BACKGROUND_IMAGE = 'images/kym-645714-unsplash.jpg';
+const STORAGE_KEY = 'peter-wolf';
+const AUDIO_POSITION_REFRESH_RATE = 100;
 
 const SOUND_EFFECTS = [
   { id: 'peter', label: '👦', mp3: 'peter.mp3' },
@@ -33,10 +37,45 @@ const SOUND_EFFECTS = [
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { audioReady: true, playing: false, currentSoundFxId: '' };
+    this.storage = new Storage(STORAGE_KEY);
+    this.setInitialState();
     this.loadSoundFxs();
     this.loadMainSound();
   }
+
+  componentDidMount() {
+    this.registerEventListeners();
+  }
+
+  registerEventListeners = () => {
+    this.sound.on('load', this.onMainAudioLoad);
+  };
+
+  onMainAudioLoad = () => {
+    const { currentPosition } = this.state;
+    this.sound.seek(currentPosition);
+    setInterval(this.saveCurrentPosition, AUDIO_POSITION_REFRESH_RATE);
+  };
+
+  saveCurrentPosition = () => {
+    const newPosition = this.sound.seek();
+    const isValidNewPosition = isNumeric(newPosition);
+    if (isValidNewPosition) {
+      this.storage.save({ currentPosition: newPosition });
+      this.setState({ currentPosition: newPosition });
+    }
+  };
+
+  setInitialState = () => {
+    const savedState = this.storage.load();
+    this.state = {
+      audioReady: true,
+      playing: false,
+      currentSoundFxId: '',
+      currentPosition: 0,
+      ...savedState,
+    };
+  };
 
   loadMainSound = () => {
     this.sound = new Howl({
@@ -108,6 +147,13 @@ class App extends Component {
     }
   };
 
+  getProgressInPercent = () => {
+    const duration = this.sound.duration();
+    if (Number.isNaN(duration) || duration === 0) return 0;
+    const { currentPosition } = this.state;
+    return (currentPosition / duration) * 100;
+  };
+
   renderSoundFxsButtons = () => {
     const { currentSoundFxId } = this.state;
     return SOUND_EFFECTS.map(sound => (
@@ -134,7 +180,7 @@ class App extends Component {
               aria-label="30 seconds back"
               value="skip-back"
               onChange={() => this.skip(-30)}
-              icon={<SkipPrevIcon />}
+              icon={<Replay />}
             />
             <BottomBar.Item
               disabled={!audioReady}
@@ -148,7 +194,10 @@ class App extends Component {
               aria-label="30 seconds forward"
               value="skip-forward"
               onChange={() => this.skip(30)}
-              icon={<SkipNextIcon />}
+              icon={<Forward />}
+            />
+            <BottomBar.Progress
+              progressInPercent={this.getProgressInPercent()}
             />
           </BottomBar>
           <div className={styles['bottom-bar-placeholder']} />

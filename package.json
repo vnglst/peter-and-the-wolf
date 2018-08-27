@@ -15,9 +15,9 @@
     "deploy": "npm run build; netlify deploy"
   },
   "lint-staged": {
-    "*.{js,jsx,css,md}": [
+    "*.{js,jsx,md}": [
       "prettier --write --single-quote",
-      "eslint ./src/**/*.js --fix",
+      "eslint --fix",
       "git add"
     ]
   },

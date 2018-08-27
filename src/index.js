@@ -3,7 +3,7 @@ import preventDoubleTapZoom from 'prevent-double-tap-zoom';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'sanitize.css';
-import './Global.css';
+import './global.css';
 
 /* eslint no-console: 0 */
 

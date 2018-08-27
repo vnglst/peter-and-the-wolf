@@ -17,27 +17,14 @@ import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
 import AudioButton from 'components/AudioButton';
 import styles from './app.css';
+import { appConfig, dutchContentVanDijk } from './config';
 
-const SOUND_TRACK_URL = './sounds/karloff-without-intro.mp3';
-const SOUND_FXS_PATH = './sounds/';
-const BACKGROUND_IMAGE = 'images/kym-645714-unsplash.jpg';
-const STORAGE_KEY = 'peter-wolf';
-const AUDIO_POSITION_REFRESH_RATE = 100;
-
-const SOUND_EFFECTS = [
-  { id: 'peter', label: '👦', mp3: 'peter.mp3' },
-  { id: 'wolf', label: '🐺', mp3: 'wolf.mp3' },
-  { id: 'bird', label: '🐦', mp3: 'bird.mp3' },
-  { id: 'duck', label: '🦆', mp3: 'duck.mp3' },
-  { id: 'grandfather', label: '👴', mp3: 'grandfather.mp3' },
-  { id: 'cat', label: '😼', mp3: 'cat.mp3' },
-  { id: 'rifleshots', label: '🔫', mp3: 'rifleshots.mp3' },
-];
+const content = dutchContentVanDijk;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.storage = new Storage(STORAGE_KEY);
+    this.storage = new Storage(appConfig.STORAGE_KEY);
     this.setInitialState();
     this.loadSoundFxs();
     this.loadMainSound();
@@ -48,13 +35,16 @@ class App extends Component {
   }
 
   registerEventListeners = () => {
-    this.sound.on('load', this.onMainAudioLoad);
+    this.sound.on('load', this.onMainSoundLoad);
   };
 
-  onMainAudioLoad = () => {
+  onMainSoundLoad = () => {
     const { currentPosition } = this.state;
     this.sound.seek(currentPosition);
-    setInterval(this.saveCurrentPosition, AUDIO_POSITION_REFRESH_RATE);
+    setInterval(
+      this.saveCurrentPosition,
+      appConfig.AUDIO_POSITION_REFRESH_RATE,
+    );
   };
 
   saveCurrentPosition = () => {
@@ -79,15 +69,15 @@ class App extends Component {
 
   loadMainSound = () => {
     this.sound = new Howl({
-      src: [SOUND_TRACK_URL],
+      src: [content.SOUND_TRACK_URL],
       html5: true,
     });
   };
 
   loadSoundFxs = () => {
     this.sfx = new SoundFX();
-    SOUND_EFFECTS.map(sound =>
-      this.sfx.load(SOUND_FXS_PATH + sound.mp3, sound.id),
+    content.SOUND_EFFECTS.map(sound =>
+      this.sfx.load(content.SOUND_FXS_PATH + sound.mp3, sound.id),
     );
   };
 
@@ -156,7 +146,7 @@ class App extends Component {
 
   renderSoundFxsButtons = () => {
     const { currentSoundFxId } = this.state;
-    return SOUND_EFFECTS.map(sound => (
+    return content.SOUND_EFFECTS.map(sound => (
       <AudioButton
         isCurrentlyPlaying={sound.id === currentSoundFxId}
         key={sound.id}
@@ -170,7 +160,7 @@ class App extends Component {
   render() {
     const { playing, audioReady } = this.state;
     return (
-      <BackgroundImage imageSrc={BACKGROUND_IMAGE}>
+      <BackgroundImage imageSrc={appConfig.BACKGROUND_IMAGE}>
         <div className={styles.app}>
           <h1 className={styles.title}>Peter and the Wolf</h1>
           <div className={styles.grid}>{this.renderSoundFxsButtons()}</div>

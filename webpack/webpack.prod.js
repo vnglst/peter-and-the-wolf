@@ -51,7 +51,11 @@ module.exports = {
       minify: true,
       verbose: true,
       navigateFallback: commonPaths.public + 'index.html',
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      staticFileGlobsIgnorePatterns: [
+        /\.mp3$/,
+        /\.map$/,
+        /asset-manifest\.json$/,
+      ],
       runtimeCaching: [
         {
           urlPattern: /https?:\/\/fonts.+/,

@@ -69,7 +69,7 @@ class App extends Component {
 
   loadMainSound = () => {
     this.sound = new Howl({
-      src: [content.SOUND_TRACK_URL],
+      src: [content.SOUNDS_PATH + content.MAIN_SOUND_FILE],
       html5: true,
     });
   };
@@ -77,7 +77,7 @@ class App extends Component {
   loadSoundFxs = () => {
     this.sfx = new SoundFX();
     content.SOUND_EFFECTS.map(sound =>
-      this.sfx.load(content.SOUND_FXS_PATH + sound.mp3, sound.id),
+      this.sfx.load(content.SOUNDS_PATH + sound.mp3, sound.id),
     );
   };
 

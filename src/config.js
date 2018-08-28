@@ -1,12 +1,14 @@
-export const appConfig = {
-  AUDIO_POSITION_REFRESH_RATE: 100,
-  BACKGROUND_IMAGE: 'images/kym-645714-unsplash.jpg',
+const defaultConfig = {
+  positionRefreshRate: 100,
+  backgroundImage: 'images/kym-645714-unsplash.jpg',
+  title: 'Peter and the Wolf',
 };
 
-export const englishContentKarloff = {
-  SOUNDS_PATH: './sounds/english-karloff/',
-  MAIN_SOUND_FILE: 'karloff-main.mp3',
-  SOUND_EFFECTS: [
+export const englishKarloff = {
+  ...defaultConfig,
+  soundsPath: './sounds/english-karloff/',
+  mainSoundFile: 'karloff-main.mp3',
+  soundEffects: [
     { id: 'peter', label: '👦', mp3: 'peter.mp3' },
     { id: 'wolf', label: '🐺', mp3: 'wolf.mp3' },
     { id: 'bird', label: '🐦', mp3: 'bird.mp3' },
@@ -15,12 +17,14 @@ export const englishContentKarloff = {
     { id: 'cat', label: '😼', mp3: 'cat.mp3' },
     { id: 'rifleshots', label: '🔫', mp3: 'rifleshots.mp3' },
   ],
-  STORAGE_KEY: 'peter-wolf-english-karloff',
+  storageKey: 'peter-wolf-english-karloff',
 };
 
-export const dutchContentVanDijk = {
-  ...englishContentKarloff,
-  SOUNDS_PATH: './sounds/dutch-vandijk/',
-  MAIN_SOUND_FILE: 'vandijk-main.mp3',
-  STORAGE_KEY: 'peter-wolf-dutch-vandijk',
+export const dutchVanDijk = {
+  ...defaultConfig,
+  ...englishKarloff,
+  title: 'Peter en de Wolf',
+  soundsPath: './sounds/dutch-vandijk/',
+  mainSoundFile: 'vandijk-main.mp3',
+  storageKey: 'peter-wolf-dutch-vandijk',
 };

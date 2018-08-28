@@ -36,8 +36,11 @@ SoundFX.prototype.play = function play({ soundId, onEnded }) {
   source.buffer = this.buffers[soundId];
   source.connect(this.context.destination);
   source.start();
-  source.addEventListener('ended', onEnded);
   this.sources[soundId] = source;
+  source.addEventListener('ended', function hasEnded() {
+    onEnded();
+    source.removeEventListener('ended', hasEnded);
+  });
 };
 
 SoundFX.prototype.stop = function stop(name) {

@@ -1,6 +1,4 @@
 // TODO: Fix a11y
-/* eslint jsx-a11y/accessible-emoji: 0 */
-/* eslint jsx-a11y/media-has-caption: 0 */
 /* eslint no-console: 0 */
 
 import PlayIcon from '@material-ui/icons/PlayArrow';
@@ -8,6 +6,7 @@ import PauzeIcon from '@material-ui/icons/Pause';
 import Forward from '@material-ui/icons/Forward30';
 import Replay from '@material-ui/icons/Replay30';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
 import SoundFX from 'utils/web-sound-fx';
 import Storage from 'utils/storage';
@@ -17,24 +16,11 @@ import BottomBar from 'components/BottomBar';
 import BackgroundImage from 'components/BackgroundImage';
 import AudioButton from 'components/AudioButton';
 import styles from './app.css';
-import {
-  appConfig,
-  dutchContentVanDijk,
-  englishContentKarloff,
-} from './config';
-
-// FIXME: really quick and hacky
-let content = englishContentKarloff;
-const getBrowserLanguage = () => navigator.language;
-const language = getBrowserLanguage();
-if (language && language.startsWith('nl')) {
-  content = dutchContentVanDijk;
-}
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.storage = new Storage(appConfig.STORAGE_KEY);
+    this.storage = new Storage(props.config.storageKey);
     this.setInitialState();
     this.loadSoundFxs();
     this.loadMainSound();
@@ -45,16 +31,14 @@ class App extends Component {
   }
 
   registerEventListeners = () => {
-    this.sound.on('load', this.onMainSoundLoad);
+    this.sound.once('load', this.onMainSoundLoad);
   };
 
   onMainSoundLoad = () => {
     const { currentPosition } = this.state;
+    const { config } = this.props;
     this.sound.seek(currentPosition);
-    setInterval(
-      this.saveCurrentPosition,
-      appConfig.AUDIO_POSITION_REFRESH_RATE,
-    );
+    setInterval(this.saveCurrentPosition, config.positionRefreshRate);
   };
 
   saveCurrentPosition = () => {
@@ -78,16 +62,18 @@ class App extends Component {
   };
 
   loadMainSound = () => {
+    const { config } = this.props;
     this.sound = new Howl({
-      src: [content.SOUNDS_PATH + content.MAIN_SOUND_FILE],
+      src: [config.soundsPath + config.mainSoundFile],
       html5: true,
     });
   };
 
   loadSoundFxs = () => {
+    const { config } = this.props;
     this.sfx = new SoundFX();
-    content.SOUND_EFFECTS.map(sound =>
-      this.sfx.load(content.SOUNDS_PATH + sound.mp3, sound.id),
+    config.soundEffects.map(sound =>
+      this.sfx.load(config.soundsPath + sound.mp3, sound.id),
     );
   };
 
@@ -156,7 +142,8 @@ class App extends Component {
 
   renderSoundFxsButtons = () => {
     const { currentSoundFxId } = this.state;
-    return content.SOUND_EFFECTS.map(sound => (
+    const { config } = this.props;
+    return config.soundEffects.map(sound => (
       <AudioButton
         isCurrentlyPlaying={sound.id === currentSoundFxId}
         key={sound.id}
@@ -169,10 +156,11 @@ class App extends Component {
 
   render() {
     const { playing, audioReady } = this.state;
+    const { config } = this.props;
     return (
-      <BackgroundImage imageSrc={appConfig.BACKGROUND_IMAGE}>
+      <BackgroundImage imageSrc={config.backgroundImage}>
         <div className={styles.app}>
-          <h1 className={styles.title}>Peter and the Wolf</h1>
+          <h1 className={styles.title}>{config.title}</h1>
           <div className={styles.grid}>{this.renderSoundFxsButtons()}</div>
           <BottomBar>
             <BottomBar.Item
@@ -206,5 +194,11 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  config: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  ).isRequired,
+};
 
 export default hot(module)(App);

@@ -1,11 +1,19 @@
+/* eslint no-console: 0 */
+
 import React from 'react';
 import preventDoubleTapZoom from 'prevent-double-tap-zoom';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'sanitize.css';
-import './global.css';
+import './index.css';
+import { dutchVanDijk, englishKarloff } from './config';
 
-/* eslint no-console: 0 */
+let config = englishKarloff;
+const getBrowserLanguage = () => navigator.language;
+const language = getBrowserLanguage();
+if (language && language.startsWith('nl')) {
+  config = dutchVanDijk;
+}
 
 preventDoubleTapZoom({ delay: 500 });
 
@@ -21,4 +29,4 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     });
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App config={config} />, document.getElementById('app'));

@@ -45,6 +45,10 @@ module.exports = {
     new SizePlugin(),
     new SWPrecacheWebpackPlugin({
       cacheId: 'peter-and-the-wolf',
+      // It is possible to load all mp3's on startup by increasing the max file size.
+      // This would make all mp3 available offline, but:
+      // - it impedes startup performance
+      // - sometimes audio isn't fully downloaded, resulting in irrecoverable playback problems
       // maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'sw.js',
@@ -52,7 +56,7 @@ module.exports = {
       verbose: true,
       navigateFallback: commonPaths.public + 'index.html',
       staticFileGlobsIgnorePatterns: [
-        /\.mp3$/,
+        /\.mp3$/, // don't cache mp3 file on app load to keep SW small
         /\.map$/,
         /asset-manifest\.json$/,
       ],
@@ -66,6 +70,8 @@ module.exports = {
             },
           },
         },
+        // Caching sounds dynamically works well, but not for the large main audio file
+        // So that's only fully available offline, after listening to it in it's entirety
         {
           urlPattern: /\/sounds\//,
           handler: 'cacheFirst',

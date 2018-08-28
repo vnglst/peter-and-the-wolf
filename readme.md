@@ -10,14 +10,14 @@ It turned out that making large audio files available offline using Service Work
 
 My current implementation of the service workers loads and caches all the app shell files (js, css, html, etc.) on startup. The mp3's are cached when those are requested by the app. This works pretty well for the short sound files, but not for the large audio file. That one only works when an internet connection is available and the audio can be streamed. Maybe I will come back to this app and topic sometime in the future.
 
-## Under the hood:
+## Under the hood
 
 - `howler.js` - audio (especially the old audio web element) is still full of unpleasant suprises. Especially on Safari. At first I tried to work around all those myself, but I should have started a library much earlier. Howler seems to work pretty well. No using it for the sound fragments (soundfx) yet. Still have to refactor that bit.
 - `material-ui-icon` - I really wish treeshaking would be better supported. Now I'm stuck with all of `@material-ui/core` even though I'm only using four svg icons. I will extract those latter to optimize the build size.
 - For the Service Workers I'm using the webpack plugin `sw-precache-webpack-plugin`, which is a Webpack wrapper around the standard `sw-precache` plugin.
 - and the standard libraries like `React`, `webpack`, `babel`, etc.
 
-## PWA
+## PWA tips
 
 - Generate favicons & app icons: https://realfavicongenerator.net/
 - Generate splash screens iOS: https://appsco.pe/developer/splash-screens (android is automatic, watch out for big images)

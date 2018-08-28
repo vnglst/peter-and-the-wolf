@@ -2,7 +2,9 @@
 
 My second attempt at a Progressive Web App (with Safari iOS in mind). The idea was to create an audio player, with some fun sound buttons around Prokofiev's symphonic fairy tale for children "Peter and the Wolf". The app was to be kids friendly, fun to use and also introduce kids to the story and music of Prokofiev. The result can be found here:
 
-![screenshot app](https://raw.githubusercontent.com/vnglst/peter-and-the-wolf/master/screenshot.png 'https://peter-and-the-wolf.netlify.com')
+![screenshot app](https://raw.githubusercontent.com/vnglst/peter-and-the-wolf/master/screenshot.png)
+
+https://peter-and-the-wolf.netlify.com
 
 It turned out that making large audio files available offline using Service Workers was more challenging than I expected. My initial thought was to download all the audio on registration of the service worker. But that lead to several problems: service worker registration could fail if downloads hadn't fully completed, but also bad performance of the app at startup. And that was on Chrome, I don't even want to go into Safari on iOS. In the end I think the combination of web audio (with all it's workarounds) and service workers, is not a happy one.
 

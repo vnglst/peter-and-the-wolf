@@ -1,5 +1,5 @@
 const defaultConfig = {
-  positionRefreshRate: 100,
+  positionRefreshRate: 500,
   backgroundImage: 'images/kym-645714-unsplash.jpg',
   title: 'Peter and the Wolf',
 };

@@ -8,6 +8,10 @@
   position: relative;
 }
 
+.audio-button svg {
+  font-size: 48px;
+}
+
 @media (min-width: 1000px) {
   .audio-button {
     width: 150px;

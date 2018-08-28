@@ -39,6 +39,7 @@ class App extends Component {
     const { config } = this.props;
     this.sound.seek(currentPosition);
     setInterval(this.saveCurrentPosition, config.positionRefreshRate);
+    this.setState({ audioReady: true });
   };
 
   saveCurrentPosition = () => {
@@ -53,7 +54,7 @@ class App extends Component {
   setInitialState = () => {
     const savedState = this.storage.load();
     this.state = {
-      audioReady: true,
+      audioReady: false,
       playing: false,
       currentSoundFxId: '',
       currentPosition: 0,

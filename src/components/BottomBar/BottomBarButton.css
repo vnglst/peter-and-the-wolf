@@ -2,11 +2,14 @@
   height: 70px;
   background: none;
   color: black;
-  border: none;
-  font: inherit;
   outline: inherit;
   flex: 1 1 auto;
   min-width: 60px;
   max-width: 144px;
-  font-size: 28px;
+  border: none;
+  box-shadow: none;
+}
+
+.bottom-bar-button svg {
+  font-size: 38px;
 }

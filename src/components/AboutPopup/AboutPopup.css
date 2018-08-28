@@ -1,0 +1,21 @@
+.about {
+  font-size: 18px;
+  line-height: 34px;
+}
+
+.about button {
+  margin: 30px;
+  color: white;
+}
+
+.about p {
+  color: black;
+  margin: 0;
+  padding: 10px 25px;
+
+  text-align: center;
+}
+
+.about a {
+  color: white;
+}

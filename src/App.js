@@ -80,7 +80,13 @@ class App extends Component {
 
   stopAllSound = () => {
     const { sounds } = this.state;
-    Object.keys(sounds).forEach(soundId => sounds[soundId].pause());
+    Object.keys(sounds).forEach(soundId => {
+      if (soundId === 'main') {
+        sounds.main.pause();
+      } else {
+        sounds[soundId].stop();
+      }
+    });
     this.setState({ currentSoundId: '' });
   };
 

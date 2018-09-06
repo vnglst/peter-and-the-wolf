@@ -1,5 +1,4 @@
-import PlayIcon from '@material-ui/icons/PlayArrow';
-import PauzeIcon from '@material-ui/icons/Pause';
+import { PlayIcon, PauzeIcon } from 'components/SvgIcons';
 import * as React from 'react';
 import Button from 'components/Button';
 import styles from './AudioButton.css';

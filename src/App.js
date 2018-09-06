@@ -1,20 +1,22 @@
 /* eslint no-console: 0 */
 
-import PlayIcon from '@material-ui/icons/PlayArrow';
-import PauzeIcon from '@material-ui/icons/Pause';
-import Forward from '@material-ui/icons/Forward30';
-import Replay from '@material-ui/icons/Replay30';
-import Info from '@material-ui/icons/Info';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { hot } from 'react-hot-loader';
-import Storage from 'utils/storage';
-import { isNumeric } from 'utils/misc';
-import { Howl } from 'howler';
-import BottomBar from 'components/BottomBar';
-import BackgroundImage from 'components/BackgroundImage';
+import AboutPopup from 'components/AboutPopup';
 import AudioButton from 'components/AudioButton';
-import AboutPopup from './components/AboutPopup';
+import BackgroundImage from 'components/BackgroundImage';
+import BottomBar from 'components/BottomBar';
+import {
+  PlayIcon,
+  PauzeIcon,
+  InfoIcon,
+  Replay30Icon,
+  Forward30Icon,
+} from 'components/SvgIcons';
+import { Howl } from 'howler';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
+import { isNumeric } from 'utils/misc';
+import Storage from 'utils/storage';
 import styles from './app.css';
 
 class App extends Component {
@@ -180,7 +182,7 @@ class App extends Component {
               aria-label="30 seconds back"
               value="skip-back"
               onChange={() => this.handleSkip(-30)}
-              icon={<Replay />}
+              icon={<Replay30Icon />}
             />
             <BottomBar.Button
               disabled={!mainAudioIsReady}
@@ -194,13 +196,13 @@ class App extends Component {
               aria-label="30 seconds forward"
               value="skip-forward"
               onChange={() => this.handleSkip(30)}
-              icon={<Forward />}
+              icon={<Forward30Icon />}
             />
             <BottomBar.Button
               aria-label="Info"
               value="info"
               onChange={this.handleAboutPopupOpen}
-              icon={<Info />}
+              icon={<InfoIcon />}
             />
             <BottomBar.Progress
               progressInPercent={this.getProgressInPercent()}

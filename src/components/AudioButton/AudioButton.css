@@ -9,7 +9,8 @@
 }
 
 .audio-button svg {
-  font-size: 48px;
+  height: 36px;
+  width: 36px;
 }
 
 @media (min-width: 1000px) {

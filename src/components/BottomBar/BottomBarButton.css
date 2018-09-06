@@ -11,5 +11,6 @@
 }
 
 .bottom-bar-button svg {
-  font-size: 32px;
+  width: 36px;
+  height: 36px;
 }

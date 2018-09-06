@@ -18,7 +18,7 @@ export const englishKarloff = {
     {
       id: 'main',
       label: '',
-      mp3: 'karloff-main.mp3',
+      mp3: 'main.mp3',
       html5: true,
     },
   ],

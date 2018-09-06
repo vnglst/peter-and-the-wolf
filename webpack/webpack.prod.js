@@ -56,7 +56,9 @@ module.exports = {
       verbose: true,
       navigateFallback: commonPaths.public + 'index.html',
       staticFileGlobsIgnorePatterns: [
-        /\.mp3$/, // don't cache mp3 file on app load to keep SW small
+        /\.webm$/,
+        /\.mp4$/,
+        /\.mp3$/, // don't cache sound files on app load to keep SW small
         /\.map$/,
         /asset-manifest\.json$/,
       ],

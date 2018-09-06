@@ -44,21 +44,30 @@ class App extends Component {
     const { config } = this.props;
     const sounds = {};
     config.soundsData.forEach(sound => {
+      const filePath = config.soundsPath + sound.file;
+      const mp3 = filePath + '.mp3';
+      const mp4 = filePath + '.mp4';
+      const webm = filePath + '.webm';
       sounds[sound.id] = new Howl({
-        src: [config.soundsPath + sound.mp3],
-        onend: () => {
-          this.setState({ currentSoundId: '' });
-        },
-        onload: () => {
-          this.setState(state => ({
-            soundLoaded: { ...state.soundLoaded, [sound.id]: true },
-          }));
-        },
+        src: [webm, mp4, mp3],
+        onend: () => this.handlePlayEnd(),
+        onload: () => this.handleAudioLoad(sound.id),
+        onloaderror: () => console.log('load error', sound.id),
         html5: sound.html5,
       });
     });
-    sounds.main.once('load', this.onMainSoundLoad);
     this.setState({ sounds });
+  };
+
+  handlePlayEnd = () => {
+    this.setState({ currentSoundId: '' });
+  };
+
+  handleAudioLoad = soundId => {
+    if (soundId === 'main') this.onMainSoundLoad();
+    this.setState(state => ({
+      soundLoaded: { ...state.soundLoaded, [soundId]: true },
+    }));
   };
 
   onMainSoundLoad = () => {

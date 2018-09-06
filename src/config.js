@@ -7,15 +7,20 @@ const defaultConfig = {
 export const englishKarloff = {
   ...defaultConfig,
   soundsPath: './sounds/english-karloff/',
-  mainSoundFile: 'karloff-main.mp3',
-  soundEffects: [
-    { id: 'peter', label: '👦', mp3: 'peter.mp3' },
-    { id: 'wolf', label: '🐺', mp3: 'wolf.mp3' },
-    { id: 'bird', label: '🐦', mp3: 'bird.mp3' },
-    { id: 'duck', label: '🦆', mp3: 'duck.mp3' },
-    { id: 'grandfather', label: '👴', mp3: 'grandfather.mp3' },
-    { id: 'cat', label: '😼', mp3: 'cat.mp3' },
-    { id: 'rifleshots', label: '🔫', mp3: 'rifleshots.mp3' },
+  soundsData: [
+    { id: 'peter', label: '👦', mp3: 'peter.mp3', soundFx: true },
+    { id: 'wolf', label: '🐺', mp3: 'wolf.mp3', soundFx: true },
+    { id: 'bird', label: '🐦', mp3: 'bird.mp3', soundFx: true },
+    { id: 'duck', label: '🦆', mp3: 'duck.mp3', soundFx: true },
+    { id: 'grandfather', label: '👴', mp3: 'grandfather.mp3', soundFx: true },
+    { id: 'cat', label: '😼', mp3: 'cat.mp3', soundFx: true },
+    { id: 'rifleshots', label: '🔫', mp3: 'rifleshots.mp3', soundFx: true },
+    {
+      id: 'main',
+      label: '',
+      mp3: 'karloff-main.mp3',
+      html5: true,
+    },
   ],
   storageKey: 'peter-wolf-english-karloff',
 };
@@ -25,6 +30,5 @@ export const dutchVanDijk = {
   ...englishKarloff,
   title: 'Peter en de Wolf',
   soundsPath: './sounds/dutch-vandijk/',
-  mainSoundFile: 'vandijk-main.mp3',
   storageKey: 'peter-wolf-dutch-vandijk',
 };

@@ -22,28 +22,55 @@ class App extends Component {
     super(props);
     this.storage = new Storage(props.config.storageKey);
     this.setInitialState();
-    this.loadSoundFxs();
-    this.loadMainSound();
   }
 
   componentDidMount() {
-    this.registerEventListeners();
+    this.loadSounds();
   }
 
-  registerEventListeners = () => {
-    this.sound.once('load', this.onMainSoundLoad);
+  setInitialState = () => {
+    const savedState = this.storage.load();
+    this.state = {
+      currentSoundId: '',
+      soundLoaded: {},
+      sounds: {},
+      currentPosition: 0,
+      aboutPopupIsOpen: false,
+      ...savedState,
+    };
+  };
+
+  loadSounds = () => {
+    const { config } = this.props;
+    const sounds = {};
+    config.soundsData.forEach(sound => {
+      sounds[sound.id] = new Howl({
+        src: [config.soundsPath + sound.mp3],
+        onend: () => {
+          this.setState({ currentSoundId: '' });
+        },
+        onload: () => {
+          this.setState(state => ({
+            soundLoaded: { ...state.soundLoaded, [sound.id]: true },
+          }));
+        },
+        html5: sound.html5,
+      });
+    });
+    sounds.main.once('load', this.onMainSoundLoad);
+    this.setState({ sounds });
   };
 
   onMainSoundLoad = () => {
-    const { currentPosition } = this.state;
+    const { currentPosition, sounds } = this.state;
     const { config } = this.props;
-    this.sound.seek(currentPosition);
+    sounds.main.seek(currentPosition);
     setInterval(this.saveCurrentPosition, config.positionRefreshRate);
-    this.setState({ audioReady: true });
   };
 
   saveCurrentPosition = () => {
-    const newPosition = this.sound.seek();
+    const { sounds } = this.state;
+    const newPosition = sounds.main.seek();
     const isValidNewPosition = isNumeric(newPosition);
     if (isValidNewPosition) {
       this.setState({ currentPosition: newPosition });
@@ -51,87 +78,45 @@ class App extends Component {
     }
   };
 
-  setInitialState = () => {
-    const savedState = this.storage.load();
-    this.state = {
-      audioReady: false,
-      playing: false,
-      currentSoundFxId: '',
-      currentPosition: 0,
-      aboutPopupIsOpen: false,
-      ...savedState,
-    };
-  };
-
-  loadMainSound = () => {
-    const { config } = this.props;
-    this.sound = new Howl({
-      src: [config.soundsPath + config.mainSoundFile],
-      html5: true,
-    });
-  };
-
-  loadSoundFxs = () => {
-    const { config } = this.props;
-    this.sfx = {};
-    config.soundEffects.forEach(sound => {
-      this.sfx[sound.id] = new Howl({
-        src: [config.soundsPath + sound.mp3],
-        onend: () => {
-          this.setState({ currentSoundFxId: '' });
-        },
-      });
-    });
-  };
-
-  handleMainSoundPlayOrPause = () => {
-    this.stopAllSoundFx();
-    this.toggleMainSoundPlayback();
-  };
-
-  toggleMainSoundPlayback = () => {
-    const { playing } = this.state;
-    if (!playing) {
-      this.sound.play();
-    } else {
-      this.sound.pause();
-    }
-    this.setState({ playing: !playing });
-  };
-
-  stopAllSoundFx = () => {
-    Object.keys(this.sfx).forEach(soundId => this.sfx[soundId].stop());
-    this.setState({ currentSoundFxId: '' });
+  stopAllSound = () => {
+    const { sounds } = this.state;
+    Object.keys(sounds).forEach(soundId => sounds[soundId].pause());
+    this.setState({ currentSoundId: '' });
   };
 
   handleSkip = value => {
-    const { playing } = this.state;
-    const currentTime = this.sound.seek();
-    this.sound.seek(currentTime + value);
-    if (!playing) this.handleMainSoundPlayOrPause();
+    const { currentSoundId, sounds } = this.state;
+    const currentTime = sounds.main.seek();
+    sounds.main.seek(currentTime + value);
+    const mainSoundIsPlaying = currentSoundId === 'main';
+    if (!mainSoundIsPlaying) this.handleSoundPlayToggle('main');
   };
 
-  handleSoundFxPlayOrPause = soundId => {
-    const { playing, audioReady, currentSoundFxId } = this.state;
-    if (!audioReady) return;
-    if (playing) {
-      this.toggleMainSoundPlayback();
-    }
-    this.stopAllSoundFx();
-    const isCurrentlyPlaying = currentSoundFxId && soundId === currentSoundFxId;
-    if (isCurrentlyPlaying) {
+  handleSoundPlayToggle = soundId => {
+    const { soundLoaded, currentSoundId } = this.state;
+
+    if (!soundLoaded[soundId]) return;
+
+    this.stopAllSound();
+
+    const isPlaying = currentSoundId && soundId === currentSoundId;
+    if (isPlaying) {
       return;
     }
-    this.playSoundFx(soundId);
+
+    this.playSound(soundId);
   };
 
-  playSoundFx = soundId => {
-    this.sfx[soundId].play();
-    this.setState({ currentSoundFxId: soundId });
+  playSound = soundId => {
+    const { sounds } = this.state;
+    sounds[soundId].play();
+    this.setState({ currentSoundId: soundId });
   };
 
   getProgressInPercent = () => {
-    const duration = this.sound.duration();
+    const { sounds } = this.state;
+    if (!sounds.main) return 0;
+    const duration = sounds.main.duration();
     if (Number.isNaN(duration) || duration === 0) return 0;
     const { currentPosition } = this.state;
     return (currentPosition / duration) * 100;
@@ -146,22 +131,29 @@ class App extends Component {
   };
 
   renderSoundFxsButtons = () => {
-    const { currentSoundFxId } = this.state;
+    const { currentSoundId, soundLoaded } = this.state;
     const { config } = this.props;
-    return config.soundEffects.map(sound => (
-      <AudioButton
-        isCurrentlyPlaying={sound.id === currentSoundFxId}
-        key={sound.id}
-        onClick={() => this.handleSoundFxPlayOrPause(sound.id)}
-      >
-        {sound.label}
-      </AudioButton>
-    ));
+    return config.soundsData.map(sound => {
+      if (sound.soundFx)
+        return (
+          <AudioButton
+            isCurrentlyPlaying={sound.id === currentSoundId}
+            disabled={!soundLoaded[sound.id]}
+            key={sound.id}
+            onClick={() => this.handleSoundPlayToggle(sound.id)}
+          >
+            {sound.label}
+          </AudioButton>
+        );
+      return null;
+    });
   };
 
   render() {
-    const { playing, audioReady, aboutPopupIsOpen } = this.state;
+    const { currentSoundId, soundLoaded, aboutPopupIsOpen } = this.state;
     const { config } = this.props;
+    const mainAudioIsPlaying = currentSoundId === 'main';
+    const mainAudioIsReady = soundLoaded.main;
     return (
       <BackgroundImage imageSrc={config.backgroundImage}>
         <div className={styles.app}>
@@ -169,21 +161,21 @@ class App extends Component {
           <div className={styles.grid}>{this.renderSoundFxsButtons()}</div>
           <BottomBar>
             <BottomBar.Button
-              disabled={!audioReady}
+              disabled={!mainAudioIsReady}
               aria-label="30 seconds back"
               value="skip-back"
               onChange={() => this.handleSkip(-30)}
               icon={<Replay />}
             />
             <BottomBar.Button
-              disabled={!audioReady}
-              aria-label={playing ? 'Pauze' : 'Play'}
-              value={playing ? 'pauze' : 'play'}
-              onChange={this.handleMainSoundPlayOrPause}
-              icon={playing ? <PauzeIcon /> : <PlayIcon />}
+              disabled={!mainAudioIsReady}
+              aria-label={mainAudioIsPlaying ? 'Pauze' : 'Play'}
+              value={mainAudioIsPlaying ? 'pauze' : 'play'}
+              onChange={() => this.handleSoundPlayToggle('main')}
+              icon={mainAudioIsPlaying ? <PauzeIcon /> : <PlayIcon />}
             />
             <BottomBar.Button
-              disabled={!audioReady}
+              disabled={!mainAudioIsReady}
               aria-label="30 seconds forward"
               value="skip-forward"
               onChange={() => this.handleSkip(30)}

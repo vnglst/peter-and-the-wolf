@@ -8,7 +8,6 @@ import Info from '@material-ui/icons/Info';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader';
-import SoundFX from 'utils/web-sound-fx';
 import Storage from 'utils/storage';
 import { isNumeric } from 'utils/misc';
 import { Howl } from 'howler';
@@ -74,10 +73,15 @@ class App extends Component {
 
   loadSoundFxs = () => {
     const { config } = this.props;
-    this.sfx = new SoundFX();
-    config.soundEffects.map(sound =>
-      this.sfx.load(config.soundsPath + sound.mp3, sound.id),
-    );
+    this.sfx = {};
+    config.soundEffects.forEach(sound => {
+      this.sfx[sound.id] = new Howl({
+        src: [config.soundsPath + sound.mp3],
+        onend: () => {
+          this.setState({ currentSoundFxId: '' });
+        },
+      });
+    });
   };
 
   handleMainSoundPlayOrPause = () => {
@@ -96,7 +100,7 @@ class App extends Component {
   };
 
   stopAllSoundFx = () => {
-    this.sfx.stopAll();
+    Object.keys(this.sfx).forEach(soundId => this.sfx[soundId].stop());
     this.setState({ currentSoundFxId: '' });
   };
 
@@ -122,18 +126,8 @@ class App extends Component {
   };
 
   playSoundFx = soundId => {
-    this.sfx.play({
-      soundId,
-      onEnded: () => this.updateStateAfterSoundEnd(soundId),
-    });
+    this.sfx[soundId].play();
     this.setState({ currentSoundFxId: soundId });
-  };
-
-  updateStateAfterSoundEnd = soundId => {
-    const { currentSoundFxId } = this.state;
-    if (currentSoundFxId === soundId) {
-      this.setState({ currentSoundFxId: '' });
-    }
   };
 
   getProgressInPercent = () => {

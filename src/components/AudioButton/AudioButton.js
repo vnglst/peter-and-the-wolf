@@ -1,9 +1,15 @@
-import { PlayIcon, PauzeIcon } from 'components/SvgIcons';
+import AudioIcon from 'components/AudioIcon';
 import * as React from 'react';
 import Button from 'components/Button';
 import styles from './AudioButton.css';
 
-const AudioButton = ({ children, className, isCurrentlyPlaying, ...other }) => {
+const AudioButton = ({
+  children,
+  className,
+  isLoading,
+  isCurrentlyPlaying,
+  ...other
+}) => {
   let cx = styles['audio-button'];
   if (className) cx += ' ' + className;
   return (
@@ -17,7 +23,7 @@ const AudioButton = ({ children, className, isCurrentlyPlaying, ...other }) => {
           (isCurrentlyPlaying ? ' ' + styles['is-currently-playing'] : '')
         }
       >
-        {isCurrentlyPlaying ? <PauzeIcon /> : <PlayIcon />}
+        <AudioIcon isLoading={isLoading} isPlaying={isCurrentlyPlaying} />
       </span>
     </Button>
   );

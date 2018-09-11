@@ -4,13 +4,8 @@ import AboutPopup from 'components/AboutPopup';
 import AudioButton from 'components/AudioButton';
 import BackgroundImage from 'components/BackgroundImage';
 import BottomBar from 'components/BottomBar';
-import {
-  Forward30Icon,
-  InfoIcon,
-  PauzeIcon,
-  PlayIcon,
-  Replay30Icon,
-} from 'components/SvgIcons';
+import AudioIcon from 'components/AudioIcon';
+import { Forward30Icon, InfoIcon, Replay30Icon } from 'components/SvgIcons';
 import { Howl } from 'howler';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
@@ -27,7 +22,7 @@ class App extends PureComponent {
     this.soundHandler.onPlayEnd = this.handlePlayEnd;
     this.soundHandler.onPlayStop = this.handlePlayEnd;
     this.soundHandler.onPlayPause = this.handlePlayEnd;
-    this.soundHandler.onSoundLoad = this.handleAudioLoad;
+    this.soundHandler.onSoundLoad = this.handleSoundLoad;
     this.soundHandler.onPlayStart = this.handlePlayStart;
     this.soundHandler.onMainSoundProgress = this.handleMainSoundProgress;
     this.setInitialState();
@@ -42,6 +37,7 @@ class App extends PureComponent {
     this.state = {
       currentSoundId: '',
       soundsLoaded: {},
+      soundsSeeking: {},
       currentPosition: 0,
       aboutPopupIsOpen: false,
       ...savedState,
@@ -62,7 +58,7 @@ class App extends PureComponent {
     this.setState({ currentSoundId: '' });
   };
 
-  handleAudioLoad = () => {
+  handleSoundLoad = () => {
     this.setState({ soundsLoaded: { ...this.soundHandler.soundsLoaded } });
   };
 
@@ -103,6 +99,7 @@ class App extends PureComponent {
         return (
           <AudioButton
             isCurrentlyPlaying={sound.id === currentSoundId}
+            isLoading={!this.isLoaded(sound.id)}
             disabled={!this.isLoaded(sound.id)}
             key={sound.id}
             onClick={() => this.handleSoundPlayToggle(sound.id)}
@@ -119,7 +116,6 @@ class App extends PureComponent {
     const { config } = this.props;
     const mainAudioIsPlaying = currentSoundId === 'main';
     const mainAudioIsReady = this.isLoaded('main');
-    console.log('rendering');
     return (
       <BackgroundImage imageSrc={config.backgroundImage}>
         <div className={styles.app}>
@@ -138,7 +134,12 @@ class App extends PureComponent {
               aria-label={mainAudioIsPlaying ? 'Pauze' : 'Play'}
               value={mainAudioIsPlaying ? 'pauze' : 'play'}
               onChange={() => this.handleSoundPlayToggle('main')}
-              icon={mainAudioIsPlaying ? <PauzeIcon /> : <PlayIcon />}
+              icon={
+                <AudioIcon
+                  isLoading={!mainAudioIsReady}
+                  isPlaying={mainAudioIsPlaying}
+                />
+              }
             />
             <BottomBar.Button
               disabled={!mainAudioIsReady}

@@ -32,7 +32,6 @@ export default class SoundHandler {
     this.soundsLoaded[soundId] = true;
     if (soundId === 'main') {
       this.sounds.main.seek(this.mainStartPosition);
-      console.log('starting interval');
       setInterval(this.checkMainSoundProgress, this.config.positionRefreshrate);
     }
     this.onSoundLoad();

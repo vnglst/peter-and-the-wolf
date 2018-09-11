@@ -1,12 +1,12 @@
 /* eslint no-console: 0 */
 
-import React from 'react';
 import preventDoubleTapZoom from 'prevent-double-tap-zoom';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import { dutchVanDijk, englishKarloff } from './config';
 import './styles/sanitize.css';
 import './styles/index.css';
-import { dutchVanDijk, englishKarloff } from './config';
 
 let config = englishKarloff;
 const getBrowserLanguage = () => navigator.language;

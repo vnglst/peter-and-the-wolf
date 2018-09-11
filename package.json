@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Peter and the Wolf PWA",
   "main": "index.js",
+  "repository": "https://github.com/vnglst/peter-and-the-wolf",
+  "author": "Koen van Gilst",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-serve --open",
     "build": "cross-env NODE_ENV=production webpack; bundlesize",
@@ -19,36 +23,6 @@
       "git add"
     ]
   },
-  "bundlesize": [
-    {
-      "path": "./build/js/main.*.js",
-      "maxSize": "50 kB"
-    }
-  ],
-  "jest": {
-    "automock": false,
-    "testEnvironment": "jsdom",
-    "moduleNameMapper": {
-      "\\.(css|scss)$": "identity-obj-proxy"
-    },
-    "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest"
-    },
-    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "src/**/*.jsx"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "jsx"
-    ]
-  },
-  "repository": "https://github.com/vnglst/peter-and-the-wolf",
-  "author": "Koen van Gilst",
-  "license": "MIT",
-  "private": false,
   "dependencies": {
     "howler": "^2.0.14",
     "prevent-double-tap-zoom": "^2.0.4",
@@ -117,5 +91,31 @@
     "webpack-cli": "3.1.0",
     "webpack-merge": "4.1.4",
     "webpack-serve": "2.0.2"
+  },
+  "bundlesize": [
+    {
+      "path": "./build/js/main.*.js",
+      "maxSize": "50 kB"
+    }
+  ],
+  "jest": {
+    "automock": false,
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "src/**/*.jsx"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ]
   }
 }

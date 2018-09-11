@@ -5,47 +5,31 @@ import AudioButton from 'components/AudioButton';
 import BackgroundImage from 'components/BackgroundImage';
 import BottomBar from 'components/BottomBar';
 import {
-  PlayIcon,
-  PauzeIcon,
-  InfoIcon,
-  Replay30Icon,
   Forward30Icon,
+  InfoIcon,
+  PauzeIcon,
+  PlayIcon,
+  Replay30Icon,
 } from 'components/SvgIcons';
 import { Howl } from 'howler';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { hot } from 'react-hot-loader';
-import { isNumeric } from 'utils/misc';
-import Storage from 'utils/storage';
+import SoundHandler from 'utils/SoundHandler';
+import Storage from 'utils/Storage';
 import styles from './app.css';
 
-/*
-
-create SoundHandler class
-
-soundHandler = new SoundHandler(config)
-soundHandler.load(
-  onSoundFxLoad
-  onMainSoundLoad
-  onEnd
-)
-
-soundHandler.getSounds() ==> returns sounds
-
-soundHandler.stopAllSoundFx()
-soundHandler.stopMainSound()
-soundHandler.stopAllSound()
-
-soundHandler.skipMainSound()
-
-soundHandler.getMainSoundProgressInPercent()
-
-*/
-
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.storage = new Storage(props.config.storageKey);
+    this.soundHandler = new SoundHandler({ config: props.config, Howl });
+    this.soundHandler.onPlayEnd = this.handlePlayEnd;
+    this.soundHandler.onPlayStop = this.handlePlayEnd;
+    this.soundHandler.onPlayPause = this.handlePlayEnd;
+    this.soundHandler.onSoundLoad = this.handleAudioLoad;
+    this.soundHandler.onPlayStart = this.handlePlayStart;
+    this.soundHandler.onMainSoundProgress = this.handleMainSoundProgress;
     this.setInitialState();
   }
 
@@ -57,8 +41,7 @@ class App extends Component {
     const savedState = this.storage.load();
     this.state = {
       currentSoundId: '',
-      soundLoaded: {},
-      sounds: {},
+      soundsLoaded: {},
       currentPosition: 0,
       aboutPopupIsOpen: false,
       ...savedState,
@@ -66,101 +49,43 @@ class App extends Component {
   };
 
   loadSounds = () => {
-    const { config } = this.props;
-    const sounds = {};
-    config.soundsData.forEach(sound => {
-      const filePath = config.soundsPath + sound.file;
-      const mp3 = filePath + '.mp3';
-      const mp4 = filePath + '.mp4';
-      const webm = filePath + '.webm';
-      sounds[sound.id] = new Howl({
-        src: [webm, mp4, mp3],
-        onend: () => this.handlePlayEnd(),
-        onload: () => this.handleAudioLoad(sound.id),
-        onloaderror: () => console.log('load error', sound.id),
-        html5: sound.html5,
-      });
-    });
-    this.setState({ sounds });
+    const { currentPosition } = this.state;
+    this.soundHandler.mainStartPosition = currentPosition;
+    this.soundHandler.load();
+  };
+
+  handlePlayStart = soundId => {
+    this.setState({ currentSoundId: soundId });
   };
 
   handlePlayEnd = () => {
     this.setState({ currentSoundId: '' });
   };
 
-  handleAudioLoad = soundId => {
-    if (soundId === 'main') this.onMainSoundLoad();
-    this.setState(state => ({
-      soundLoaded: { ...state.soundLoaded, [soundId]: true },
-    }));
+  handleAudioLoad = () => {
+    this.setState({ soundsLoaded: { ...this.soundHandler.soundsLoaded } });
   };
 
-  onMainSoundLoad = () => {
-    const { currentPosition, sounds } = this.state;
-    const { config } = this.props;
-    sounds.main.seek(currentPosition);
-    setInterval(this.saveCurrentPosition, config.positionRefreshRate);
+  handleMainSoundProgress = newPosition => {
+    this.setState({ currentPosition: newPosition });
+    this.storage.save({ currentPosition: newPosition });
   };
 
-  saveCurrentPosition = () => {
-    const { sounds } = this.state;
-    const newPosition = sounds.main.seek();
-    const isValidNewPosition = isNumeric(newPosition);
-    if (isValidNewPosition) {
-      this.setState({ currentPosition: newPosition });
-      this.storage.save({ currentPosition: newPosition });
-    }
-  };
-
-  stopAllSound = () => {
-    const { sounds } = this.state;
-    Object.keys(sounds).forEach(soundId => {
-      if (soundId === 'main') {
-        sounds.main.pause();
-      } else {
-        sounds[soundId].stop();
-      }
-    });
-    this.setState({ currentSoundId: '' });
+  isLoaded = soundId => {
+    const { soundsLoaded } = this.state;
+    return soundsLoaded[soundId];
   };
 
   handleSkip = value => {
-    const { currentSoundId, sounds } = this.state;
-    const currentTime = sounds.main.seek();
-    sounds.main.seek(currentTime + value);
-    const mainSoundIsPlaying = currentSoundId === 'main';
-    if (!mainSoundIsPlaying) this.handleSoundPlayToggle('main');
+    this.soundHandler.skipMainSound(value);
   };
 
   handleSoundPlayToggle = soundId => {
-    const { soundLoaded, currentSoundId } = this.state;
-
-    if (!soundLoaded[soundId]) return;
-
-    this.stopAllSound();
-
-    const isPlaying = currentSoundId && soundId === currentSoundId;
-    if (isPlaying) {
-      return;
-    }
-
-    this.playSound(soundId);
+    const { currentSoundId } = this.state;
+    this.soundHandler.toggleSoundPlay(soundId, currentSoundId);
   };
 
-  playSound = soundId => {
-    const { sounds } = this.state;
-    sounds[soundId].play();
-    this.setState({ currentSoundId: soundId });
-  };
-
-  getProgressInPercent = () => {
-    const { sounds } = this.state;
-    if (!sounds.main) return 0;
-    const duration = sounds.main.duration();
-    if (Number.isNaN(duration) || duration === 0) return 0;
-    const { currentPosition } = this.state;
-    return (currentPosition / duration) * 100;
-  };
+  getProgressInPercent = () => this.soundHandler.getMainProgressInPercent();
 
   handleAboutPopupClose = () => {
     this.setState({ aboutPopupIsOpen: false });
@@ -171,14 +96,14 @@ class App extends Component {
   };
 
   renderSoundFxsButtons = () => {
-    const { currentSoundId, soundLoaded } = this.state;
+    const { currentSoundId } = this.state;
     const { config } = this.props;
     return config.soundsData.map(sound => {
       if (sound.soundFx)
         return (
           <AudioButton
             isCurrentlyPlaying={sound.id === currentSoundId}
-            disabled={!soundLoaded[sound.id]}
+            disabled={!this.isLoaded(sound.id)}
             key={sound.id}
             onClick={() => this.handleSoundPlayToggle(sound.id)}
           >
@@ -190,10 +115,11 @@ class App extends Component {
   };
 
   render() {
-    const { currentSoundId, soundLoaded, aboutPopupIsOpen } = this.state;
+    const { currentSoundId, aboutPopupIsOpen } = this.state;
     const { config } = this.props;
     const mainAudioIsPlaying = currentSoundId === 'main';
-    const mainAudioIsReady = soundLoaded.main;
+    const mainAudioIsReady = this.isLoaded('main');
+    console.log('rendering');
     return (
       <BackgroundImage imageSrc={config.backgroundImage}>
         <div className={styles.app}>

@@ -14,7 +14,7 @@
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest --coverage",
     "precommit": "lint-staged",
-    "deploy": "yarn build; netlify deploy"
+    "deploy": "yarn test; yarn build; netlify deploy"
   },
   "lint-staged": {
     "*.{js,jsx,md}": [

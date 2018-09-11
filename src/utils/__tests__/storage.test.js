@@ -1,4 +1,4 @@
-import Storage from '../storage';
+import Storage from '../Storage';
 
 describe('localStorage', () => {
   let storage;

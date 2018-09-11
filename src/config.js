@@ -6,7 +6,7 @@ const defaultConfig = {
 
 export const englishKarloff = {
   ...defaultConfig,
-  soundsPath: './sounds/english-karloff/',
+  soundsPath: 'sounds/english-karloff/',
   soundsData: [
     {
       id: 'peter',
@@ -64,6 +64,6 @@ export const dutchVanDijk = {
   ...defaultConfig,
   ...englishKarloff,
   title: 'Peter en de Wolf',
-  soundsPath: './sounds/dutch-vandijk/',
+  soundsPath: 'sounds/dutch-vandijk/',
   storageKey: 'peter-wolf-dutch-vandijk',
 };

@@ -54,7 +54,6 @@
     "npm": ">=3"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
     "howler": "^2.0.14",
     "prevent-double-tap-zoom": "^2.0.4",
     "prop-types": "^15.6.2",

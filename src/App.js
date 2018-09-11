@@ -19,6 +19,29 @@ import { isNumeric } from 'utils/misc';
 import Storage from 'utils/storage';
 import styles from './app.css';
 
+/*
+
+create SoundHandler class
+
+soundHandler = new SoundHandler(config)
+soundHandler.load(
+  onSoundFxLoad
+  onMainSoundLoad
+  onEnd
+)
+
+soundHandler.getSounds() ==> returns sounds
+
+soundHandler.stopAllSoundFx()
+soundHandler.stopMainSound()
+soundHandler.stopAllSound()
+
+soundHandler.skipMainSound()
+
+soundHandler.getMainSoundProgressInPercent()
+
+*/
+
 class App extends Component {
   constructor(props) {
     super(props);

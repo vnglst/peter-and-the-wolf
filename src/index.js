@@ -3,9 +3,9 @@
 import React from 'react';
 import preventDoubleTapZoom from 'prevent-double-tap-zoom';
 import ReactDOM from 'react-dom';
-import App from './App';
-import 'sanitize.css';
-import './index.css';
+import App from './components/App';
+import './styles/sanitize.css';
+import './styles/index.css';
 import { dutchVanDijk, englishKarloff } from './config';
 
 let config = englishKarloff;

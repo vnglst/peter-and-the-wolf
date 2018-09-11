@@ -55,8 +55,7 @@
     "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-dom": "16.5.0",
-    "react-hot-loader": "4.3.6",
-    "sanitize.css": "^7.0.3"
+    "react-hot-loader": "4.3.6"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",

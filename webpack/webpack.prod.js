@@ -1,6 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const SizePlugin = require('size-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -42,7 +41,6 @@ module.exports = {
       filename: `${commonPaths.cssFolder}/[name].css`,
       chunkFilename: '[id].css',
     }),
-    new SizePlugin(),
     new SWPrecacheWebpackPlugin({
       cacheId: 'peter-and-the-wolf',
       // It is possible to load all mp3's on startup by increasing the max file size.

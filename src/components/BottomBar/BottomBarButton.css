@@ -1,16 +1,16 @@
 .bottom-bar-button {
-  height: 70px;
+  height: 5rem;
   background: none;
   color: black;
   outline: inherit;
   flex: 1 1 auto;
-  min-width: 60px;
-  max-width: 144px;
+  min-width: 5rem;
+  max-width: 8rem;
   border: none;
   box-shadow: none;
 }
 
 .bottom-bar-button svg {
-  width: 36px;
-  height: 36px;
+  width: 3rem;
+  height: 3rem;
 }

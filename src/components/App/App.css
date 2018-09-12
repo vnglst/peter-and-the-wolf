@@ -10,22 +10,16 @@
   text-align: center;
   text-shadow: 0 0 5px var(--blauw), 0 0 10px var(--blauw),
     0 0 15px var(--blauw);
-  font-size: 6vmax;
-}
-
-@media (min-width: 1000px) {
-  .title {
-    font-size: 60px;
-  }
+  font-size: 3em;
 }
 
 .grid {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 40em;
 }
 
 .bottom-bar-placeholder {
-  height: 100px;
+  height: 7em;
 }

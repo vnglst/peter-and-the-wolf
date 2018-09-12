@@ -1,24 +1,15 @@
 .audio-button {
-  padding: 15px;
-  border-radius: 10px;
-  margin: 3vmin;
-  font-size: 6vmax;
-  width: 12vmax;
-  height: 12vmax;
+  font-size: 3em;
+  border-radius: 0.5em;
+  margin: 0.25em;
+  width: 2.25em;
+  height: 2.25em;
   position: relative;
 }
 
 .audio-button svg {
-  height: 36px;
-  width: 36px;
-}
-
-@media (min-width: 1000px) {
-  .audio-button {
-    width: 150px;
-    height: 150px;
-    font-size: 70px;
-  }
+  width: 3rem;
+  height: 3rem;
 }
 
 .button-content {

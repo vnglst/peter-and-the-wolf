@@ -1,6 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
@@ -29,7 +28,8 @@ module.exports = {
               localIdentName: '[local]___[hash:base64:5]',
             },
           },
-          'sass-loader',
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+          { loader: 'sass-loader', options: { sourceMap: true } },
         ],
       },
     ],
@@ -39,8 +39,8 @@ module.exports = {
       root: commonPaths.root,
     }),
     new MiniCssExtractPlugin({
-      filename: `${commonPaths.cssFolder}/[name].css`,
-      chunkFilename: '[id].css',
+      filename: `${commonPaths.cssFolder}/[name].[hash].css`,
+      chunkFilename: '[id].[hash].css',
     }),
     new workboxPlugin.GenerateSW({
       cacheId: 'peter-and-the-wolf',

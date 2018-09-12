@@ -7,7 +7,19 @@ const commonPaths = require('./paths');
 
 module.exports = {
   entry: commonPaths.entryPath,
-  stats: 'minimal',
+  stats: {
+    // fallback value for stats options when an option is not defined (has precedence over local webpack defaults)
+    all: false,
+    // Add asset Information
+    assets: true,
+    // Sort assets by a field
+    // You can reverse the sort with `!field`.
+    assetsSort: '!size',
+    // Exclude assets from being displayed in stats
+    // This can be done with a String, a RegExp, a Function getting the assets name
+    // and returning a boolean or an Array of the above.
+    excludeAssets: /\.(mp3|webm)$/,
+  },
   module: {
     rules: [
       {
@@ -23,17 +35,6 @@ module.exports = {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         exclude: /(node_modules)/,
-      },
-      {
-        test: /\.(mp3)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: commonPaths.soundsFolder,
-            },
-          },
-        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,

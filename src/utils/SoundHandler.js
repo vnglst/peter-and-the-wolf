@@ -1,13 +1,31 @@
 /* eslint no-console: 0 */
 
-import { isNumeric } from 'utils/misc';
+import { isNumeric } from './misc';
 
 export default class SoundHandler {
-  constructor({ config, Howl }) {
+  constructor({
+    config,
+    Howl,
+    onEnd,
+    onStop,
+    onPause,
+    onLoad,
+    onStart,
+    onSeek,
+    onMainProgress,
+  }) {
     this.config = config;
     this.Howl = Howl;
+    this.onEnd = onEnd;
+    this.onStop = onStop;
+    this.onPause = onPause;
+    this.onLoad = onLoad;
+    this.onStart = onStart;
+    this.onSeek = onSeek;
+    this.onMainProgress = onMainProgress;
     this.sounds = {};
     this.soundsLoaded = {};
+    this.mainStartPosition = 0;
   }
 
   load = () => {
@@ -17,35 +35,47 @@ export default class SoundHandler {
       const mp3 = filePath + '.mp3';
       this.sounds[sound.id] = new this.Howl({
         src: [webm, mp3],
-        onplay: () => this.onPlayStart(sound.id),
-        onend: () => this.onPlayEnd(sound.id),
-        onstop: () => this.onPlayStop(sound.id),
-        onpause: () => this.onPlayPause(sound.id),
-        onload: () => this.handleSoundLoad(sound.id),
+        onplay: () => this.onStart(sound.id),
+        onend: () => this.onEnd(sound.id),
+        onstop: () => this.onStop(sound.id),
+        onpause: () => this.onPause(sound.id),
+        onload: () => this.handleLoad(sound.id),
+        onseek: () => this.onSeek(sound.id),
         onloaderror: (id, e) => console.log('load error', sound.id, e),
         html5: sound.html5,
       });
     });
   };
 
-  handleSoundLoad = soundId => {
+  handleLoad = soundId => {
     this.soundsLoaded[soundId] = true;
     if (soundId === 'main') {
       this.sounds.main.seek(this.mainStartPosition);
-      setInterval(this.checkMainSoundProgress, this.config.positionRefreshrate);
+      setInterval(this.checkMainProgress, this.config.positionRefreshrate);
     }
-    this.onSoundLoad();
+    this.onLoad();
   };
 
-  checkMainSoundProgress = () => {
+  checkMainProgress = () => {
     const newPosition = this.sounds.main.seek();
     const isValidNewPosition = isNumeric(newPosition);
-    if (isValidNewPosition) this.onMainSoundProgress(newPosition);
+    if (isValidNewPosition) this.onMainProgress(newPosition);
+  };
+
+  togglePlay = (soundId, currentSoundId) => {
+    if (!this.isLoaded(soundId)) return;
+    const shouldStopPlayback = soundId === currentSoundId;
+    this.stopAllFx();
+    this.pauseMain();
+    if (shouldStopPlayback) {
+      return;
+    }
+    this.playSound(soundId);
   };
 
   isLoaded = soundId => this.soundsLoaded[soundId];
 
-  stopAllSoundFx = () => {
+  stopAllFx = () => {
     Object.keys(this.sounds).forEach(soundId => {
       if (soundId !== 'main') {
         this.sounds[soundId].stop();
@@ -53,26 +83,15 @@ export default class SoundHandler {
     });
   };
 
-  toggleSoundPlay = (soundId, currentSoundId) => {
-    if (!this.isLoaded(soundId)) return;
-    const shouldStopPlayback = soundId === currentSoundId;
-    this.stopAllSoundFx();
-    this.pauseMainSound();
-    if (shouldStopPlayback) {
-      return;
-    }
-    this.playSound(soundId);
-  };
-
   playSound = soundId => {
     this.sounds[soundId].play();
   };
 
-  pauseMainSound = () => {
+  pauseMain = () => {
     this.sounds.main.pause();
   };
 
-  skipMainSound = value => {
+  skipMain = value => {
     const currentTime = this.sounds.main.seek();
     this.sounds.main.seek(currentTime + value);
   };

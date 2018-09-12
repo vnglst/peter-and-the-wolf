@@ -15,7 +15,7 @@ html {
 *,
 *:before,
 *:after {
-  -webkit-user-select: none; /* disable text selection for all elements */
+  -webkit-user-select: none; /* disable text selection for all elements on Safari */
 }
 
 body {

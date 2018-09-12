@@ -18,13 +18,17 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     this.storage = new Storage(props.config.storageKey);
-    this.soundHandler = new SoundHandler({ config: props.config, Howl });
-    this.soundHandler.onPlayEnd = this.handlePlayEnd;
-    this.soundHandler.onPlayStop = this.handlePlayEnd;
-    this.soundHandler.onPlayPause = this.handlePlayEnd;
-    this.soundHandler.onSoundLoad = this.handleSoundLoad;
-    this.soundHandler.onPlayStart = this.handlePlayStart;
-    this.soundHandler.onMainSoundProgress = this.handleMainSoundProgress;
+    this.soundHandler = new SoundHandler({
+      config: props.config,
+      Howl,
+      onEnd: this.handlePlayEnd,
+      onStop: this.handlePlayEnd,
+      onPause: this.handlePlayEnd,
+      onLoad: this.handleSoundLoad,
+      onStart: this.handlePlayStart,
+      onSeek: this.handleSeek,
+      onMainProgress: this.handleMainSoundProgress,
+    });
     this.setInitialState();
   }
 
@@ -62,6 +66,10 @@ class App extends PureComponent {
     this.setState({ soundsLoaded: { ...this.soundHandler.soundsLoaded } });
   };
 
+  handleSeek = () => {
+    // console.log('seeking');
+  };
+
   handleMainSoundProgress = newPosition => {
     this.setState({ currentPosition: newPosition });
     this.storage.save({ currentPosition: newPosition });
@@ -73,12 +81,12 @@ class App extends PureComponent {
   };
 
   handleSkip = value => {
-    this.soundHandler.skipMainSound(value);
+    this.soundHandler.skipMain(value);
   };
 
   handleSoundPlayToggle = soundId => {
     const { currentSoundId } = this.state;
-    this.soundHandler.toggleSoundPlay(soundId, currentSoundId);
+    this.soundHandler.togglePlay(soundId, currentSoundId);
   };
 
   getProgressInPercent = () => this.soundHandler.getMainProgressInPercent();

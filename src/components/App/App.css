@@ -8,8 +8,7 @@
 
 .title {
   text-align: center;
-  text-shadow: 0 0 5px var(--blauw), 0 0 10px var(--blauw),
-    0 0 15px var(--blauw);
+  text-shadow: 0 0 5px #245c8f, 0 0 10px #245c8f, 0 0 15px #245c8f;
   font-size: 3em;
 }
 

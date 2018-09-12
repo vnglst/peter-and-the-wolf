@@ -12,7 +12,7 @@
     #2a6aa5 30%,
     #1d4972 70%,
     #0c1e2e 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  );
   z-index: 0;
   display: flex;
   flex-direction: column;
@@ -37,11 +37,6 @@
    * w: http://animista.net, t: @cssanimista
    * ---------------------------------------------- */
 
-/**
-   * ----------------------------------------
-   * animation slide-in-top
-   * ----------------------------------------
-   */
 @-webkit-keyframes slide-in-top {
   0% {
     -webkit-transform: translateY(-1000px);

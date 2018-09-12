@@ -1,8 +1,9 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const workboxPlugin = require('workbox-webpack-plugin');
 
 const commonPaths = require('./paths');
 
@@ -41,47 +42,55 @@ module.exports = {
       filename: `${commonPaths.cssFolder}/[name].css`,
       chunkFilename: '[id].css',
     }),
-    new SWPrecacheWebpackPlugin({
+    new workboxPlugin.GenerateSW({
       cacheId: 'peter-and-the-wolf',
-      // It is possible to load all mp3's on startup by increasing the max file size.
-      // This would make all mp3 available offline, but:
-      // - it impedes startup performance
-      // - sometimes audio isn't fully downloaded, resulting in irrecoverable playback problems
-      // maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
-      dontCacheBustUrlsMatching: /\.\w{8}\./,
-      filename: 'sw.js',
-      minify: true,
-      verbose: true,
-      navigateFallback: commonPaths.public + 'index.html',
-      staticFileGlobsIgnorePatterns: [
+      swDest: 'sw.js',
+      clientsClaim: true,
+      skipWaiting: true,
+      exclude: [
+        // to keep app shell small, don't cache the following
         /\.webm$/,
         /\.mp4$/,
-        /\.mp3$/, // don't cache sound files on app load to keep SW small
-        /\.map$/,
-        /asset-manifest\.json$/,
+        /\.mp3$/, // no sounds
+        /\.map$/, // no sourcemaps
+        /^(?:asset-)manifest.*\.js(?:on)?$/,
       ],
       runtimeCaching: [
         {
-          urlPattern: /https?:\/\/fonts.+/,
-          handler: 'cacheFirst',
+          urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+          handler: 'staleWhileRevalidate',
           options: {
-            cache: {
-              name: 'fonts-cache',
-            },
+            cacheName: 'google-fonts-stylesheets',
+            cacheableResponse: { statuses: [0, 200] },
           },
         },
-        // Caching sounds dynamically works well, but not for the large main audio file
-        // So that's only fully available offline, after listening to it in it's entirety
         {
-          urlPattern: /\/sounds\//,
+          urlPattern: /^https:\/\/fonts\.gstatic\.com/,
           handler: 'cacheFirst',
           options: {
-            cache: {
-              name: 'sounds-cache',
-            },
+            cacheName: 'google-fonts',
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+        // It turned out to be much more difficult to cache large audio files using
+        // a service worker. There is a plugin available for workbox, but I was
+        // unable to get it to work using a custom script with 'importScripts: ['sw-audio-caching.js']'
+        // The problem might be that I'm using the webm audio format and the plugin is
+        // written for mp4, but I'm not sure. More details see:
+        // - https://developers.google.com/web/tools/workbox/modules/workbox-range-requests
+        // And the issue/PR that added support for this:
+        // - https://github.com/GoogleChrome/workbox/issues/372
+        {
+          urlPattern: /\.(?:mp3|webm)$/,
+          handler: 'cacheFirst',
+          options: {
+            cacheName: 'sounds',
+            cacheableResponse: { statuses: [0, 200] },
           },
         },
       ],
+      // Note: Chrome is currently not fetching favicons from pre cache. This is a known bug.
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=448427
     }),
   ],
   devtool: 'source-map',

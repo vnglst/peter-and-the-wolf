@@ -15,7 +15,8 @@ My current implementation of the service workers loads and caches all the app sh
 - `howler.js` - audio (especially the old audio web element) is still full of unpleasant suprises. Especially on Safari. At first I tried to work around all those myself, but I should have started a library much earlier. Howler seems to work pretty well.
 - ~~`material-ui-icon` - I really wish treeshaking would be better supported. Now I'm stuck with all of `@material-ui/core` even though I'm only using four svg icons. I will extract those latter to optimize the build size.~~ Inlined all svg's
 - ~~For the Service Workers I'm using the webpack plugin `sw-precache-webpack-plugin`, which is a Webpack wrapper around the standard `sw-precache` plugin.~~ I switched to `workbox-webpack-plugin`, which works more or less the same, but offers a lot more flexibility and also has better documentation.
-- and the standard libraries like `React`, `webpack`, `babel`, etc.
+- And the standard libraries like `React`, `webpack`, `babel`, etc.
+- Hosted on netlify.com, also using their domain registration service 😍😍😍
 
 ## PWA tips
 

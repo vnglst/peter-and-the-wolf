@@ -4,7 +4,7 @@ My second attempt at a Progressive Web App (with Safari iOS in mind). The idea w
 
 ![screenshot app](https://raw.githubusercontent.com/vnglst/peter-and-the-wolf/master/screenshot.png)
 
-https://peter-and-the-wolf.netlify.com
+https://peter-and-wolf.com
 
 It turned out that making large audio files available offline using Service Workers was more challenging than I expected. My initial thought was to download all the audio on registration of the service worker. But that lead to several problems: service worker registration could fail if downloads hadn't fully completed, but also bad performance of the app at startup. And that was on Chrome, I don't even want to go into Safari on iOS. In the end I think the combination of web audio (with all it's workarounds) and service workers, is not a happy one.
 

@@ -1,7 +1,7 @@
 {
   "name": "peter-and-the-wolf",
   "version": "2.0.0",
-  "description": "Peter and the Wolf PWA",
+  "description": "Peter and the Wolf Progressive Web App",
   "main": "index.js",
   "repository": "https://github.com/vnglst/peter-and-the-wolf",
   "author": "Koen van Gilst",
